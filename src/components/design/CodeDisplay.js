@@ -69,8 +69,8 @@ const CodeDisplay = ({code, onDataChange, ...props}) => {
                         <Progress size={[24, 24]} type="circle" percent={100} />
                     </span>
                 }
-                <Button style={{marginLeft: '10px'}} icon={<ClearOutlined />} onClick={handleClearData}>Clear</Button>
-                <Button style={{marginLeft: '10px'}} type="primary" icon={<PlayCircleOutlined />} onClick={handleUpdateCode}>Run</Button>
+                {/* <Button style={{marginLeft: '10px'}} icon={<ClearOutlined />} onClick={handleClearData}>Clear</Button> */}
+                <Button style={{marginLeft: '10px'}} type="primary" icon={<PlayCircleOutlined />} onClick={handleUpdateCode}>Apply</Button>
             </div>
             
             <CodeMirror

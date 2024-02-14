@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>演讲时间线</title>
+    <style>
+        #timeline {
+            width: 600px; /* 时间线长度为600px */
+            margin: 50px auto;
+            position: relative;
+            font-family: Arial, sans-serif;
+        }
+
+        .timeline-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            padding: 40px 0; /* 增加上下的空间 */
+        }
+
+        /* 时间线本身的样式 */
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            height: 2px;
+            width: 100%;
+            background-color: #000;
+            top: 50%;
+            left: 0;
+            z-index: 0;
+        }
+
+        /* 时间线右端的箭头 */
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            border: solid transparent;
+            height: 0;
+            width: 0;
+            border-left-color: #000;
+            border-width: 10px;
+            margin-top: -10px;
+            z-index: 1;
+        }
+
+        .node {
+            position: relative;
+            background-color: #fff;
+            border: 2px solid #ddd;
+            border-radius: 50%;
+            width: 20px; /* 节点大小 */
+            height: 20px; /* 节点大小 */
+            margin: 0 30px; /* 节点间距 */
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .node:hover, .node.active {
+            border-color: #333;
+        }
+
+        .node-title {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 0.8em;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 3px;
+            border-radius: 5px;
+            white-space: nowrap;
+        }
+
+        /* 脚本显示区域 */
+        .script-container {
+            position: absolute;
+            bottom: -80px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.8em;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            min-height: 60px; /* 脚本区域最低高度 */
+        }
+    </style>
+</head>
+<body>
+
+<div id="timeline">
+    <div class="timeline-container">
+        <!-- 示例节点 -->
+        <div class="node">
+            <div class="node-title">开场白</div>
+        </div>
+        <!-- 更多节点可以动态添加到这里 -->
+    </div>
+    <!-- 脚本显示区域 -->
+    <div class="script-container">点击节点查看脚本内容...</div>
+</div>
+
+<script>
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('node')) {
+            const title = e.target.querySelector('.node-title').textContent;
+            updateScript(title);
+        }
+    });
+
+    function updateScript(title) {
+        const scriptContainer = document.querySelector('.script-container');
+        // 假设script内容是根据title来获取的
+        scriptContainer.textContent = `脚本内容: ${title} 的详细信息...`;
+    }
+</script>
+</body>
+</html>

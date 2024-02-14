@@ -1,15 +1,20 @@
 
 import React, { useEffect, useState }from 'react';
 import { useLocation } from 'react-router-dom';
-import { PlaySquareOutlined, PlusOutlined, SearchOutlined, UploadOutlined, UserOutlined, VideoCameraOutlined, SaveOutlined } from '@ant-design/icons';
-import {Avatar, Card, notification, Layout, Menu, theme, Col, Row, Button, Form, Select, Space, Divider, Alert} from 'antd';
+import { PlaySquareOutlined, PlusOutlined, SearchOutlined, AreaChartOutlined, UploadOutlined, UserOutlined, VideoCameraOutlined, SaveOutlined } from '@ant-design/icons';
+import {Avatar, Card, notification, Layout, Menu, theme, Col, Row, Button, Form, Select, Space, Divider, Alert, Collapse} from 'antd';
+import Accordion from 'react-bootstrap/Accordion';
 import { Link, useHistory} from "react-router-dom";
 import PageCard from './PageCard';
 import PageDesign from './PageDesign';
 import ChartType from './ChartType';
+import ChartSettings from './ChartSettings';
+import AdvancedChartSettings from './AdvancedChartSettings';
+import TimelineDesign from './TimelineDesign';
 import { storage } from "../../firebase";
 import { forEach, set } from 'lodash';
 import MyLineChart from './MyChart';
+import BubbleChartSettings from './BubbleChartSettings';
 import {
     defaultLineData,
     defaultBarData,
@@ -24,11 +29,18 @@ import {
     default3DGlobeData,
     defaultTimelineBubbleOption,
 } from "./defaultChartData";
+import bubbleOption from './defaultBubbleData';
 import TextEdit from './TextEdit';
 import chart2svg from './chart2svg';
 import { database } from "../../firebase";
 import OptionsSettings from './OptionsSettings';
 import 'react-data-grid/lib/styles.css';
+import defaultStoryTimeline from "./defaultTimeline";
+
+
+import defaultNewChartData from './defaultNewChartData';
+import SinglePageTimeline from './SinglePageTimeline';
+import Modal from 'react-bootstrap/Modal';
 
 
 const { Meta } = Card;
@@ -50,6 +62,10 @@ export default function ChartDesign() {
     const [selectedType, setSelectedType] = useState(undefined);
     const [textEdits, setTextEdits] = useState([]);
     const [textEditShow, setTextEditShow] = useState(true);
+    const [timelineOpen, setTimelineOpen] = useState(false);
+    const [displayLink, setDisplayLink] = useState(`userId=${userId}&slide=${slideName}&title=${slideTitle}`);
+
+    const [chartSettings, setChartSettings] = useState({renderingMode: 'immediate'});
 
     notification.config({
         duration: 1,
@@ -77,64 +93,64 @@ export default function ChartDesign() {
             desc: 'Line Chart',
             icon: './chartype/line.png'
         },
+        // {
+        //     label: 'Pie Chart',
+        //     value: 'pie',
+        //     desc: 'Pie Chart',
+        //     icon: './chartype/pie.png'
+        // },
+        // {
+        //     label: 'Scatter Chart',
+        //     value: 'scatter',
+        //     desc: 'Scatter Chart',
+        //     icon: './chartype/scatter.png'
+        // },
+        // {
+        //     label: 'Radar Chart',
+        //     value: 'radar',
+        //     desc: 'Radar Chart',
+        //     icon: './chartype/radar.png'
+        // },
+        // {
+        //     label: 'Heatmap Chart',
+        //     value: 'heatmap',
+        //     desc: 'Heatmap Chart',
+        //     icon: './chartype/heatmap.png'
+        // },
+        // {
+        //     label: 'Sunburst Chart',
+        //     value: 'sunburst',
+        //     desc: 'Sunburst Chart',
+        //     icon: './chartype/sunburst.png'
+        // },
+        // {
+        //     label: 'Treemap Chart',
+        //     value: 'treemap',
+        //     desc: 'Treemap Chart',
+        //     icon: './chartype/treemap.png'
+        // },
+        // {
+        //     label: 'Funnel Chart',
+        //     value: 'funnel',
+        //     desc: 'Funnel Chart',
+        //     icon: './chartype/funnel.png'
+        // },
+        // {
+        //     label: '3D Globe Chart',
+        //     value: '3dglobe',
+        //     desc: '3D Globe Chart',
+        //     icon: './chartype/3dglobe.png'
+        // },
+        // {
+        //     label: '3D Surface Chart',
+        //     value: '3dsurface',
+        //     desc: '3D Surface Chart',
+        //     icon: './chartype/3dsurface.png'
+        // },
         {
-            label: 'Pie Chart',
-            value: 'pie',
-            desc: 'Pie Chart',
-            icon: './chartype/pie.png'
-        },
-        {
-            label: 'Scatter Chart',
-            value: 'scatter',
-            desc: 'Scatter Chart',
-            icon: './chartype/scatter.png'
-        },
-        {
-            label: 'Radar Chart',
-            value: 'radar',
-            desc: 'Radar Chart',
-            icon: './chartype/radar.png'
-        },
-        {
-            label: 'Heatmap Chart',
-            value: 'heatmap',
-            desc: 'Heatmap Chart',
-            icon: './chartype/heatmap.png'
-        },
-        {
-            label: 'Sunburst Chart',
-            value: 'sunburst',
-            desc: 'Sunburst Chart',
-            icon: './chartype/sunburst.png'
-        },
-        {
-            label: 'Treemap Chart',
-            value: 'treemap',
-            desc: 'Treemap Chart',
-            icon: './chartype/treemap.png'
-        },
-        {
-            label: 'Funnel Chart',
-            value: 'funnel',
-            desc: 'Funnel Chart',
-            icon: './chartype/funnel.png'
-        },
-        {
-            label: '3D Globe Chart',
-            value: '3dglobe',
-            desc: '3D Globe Chart',
-            icon: './chartype/3dglobe.png'
-        },
-        {
-            label: '3D Surface Chart',
-            value: '3dsurface',
-            desc: '3D Surface Chart',
-            icon: './chartype/3dsurface.png'
-        },
-        {
-            label: 'Timeline Bubble Chart',
+            label: 'Bubble Chart',
             value: 'timelinebubble',
-            desc: 'Timeline Bubble Chart',
+            desc: 'Bubble Chart',
             icon: './chartype/scatter.png'
         },
     ]
@@ -256,11 +272,17 @@ export default function ChartDesign() {
 
     }
 
+    const saveTimeline = () => {
+
+
+        setTimelineOpen(false);
+    }
+
     const handleTemplateChartOptionsChange = (data) => {
         if (data === "line") {
-            activePage.data = JSON.stringify(defaultLineData, null, 2);
+            activePage.data = JSON.stringify(defaultNewChartData.defaultLineChartData, null, 2);
         } else if (data === "bar") {
-            activePage.data = JSON.stringify(defaultBarData, null, 2);
+            activePage.data = JSON.stringify(defaultNewChartData.defaultBarChartData, null, 2);
         } else if (data === "pie") {
             activePage.data = JSON.stringify(defaultPieData, null, 2);
         } else if (data === "scatter") {
@@ -280,7 +302,7 @@ export default function ChartDesign() {
         } else if (data === "3dglobe") {
             activePage.data = JSON.stringify(default3DGlobeData, null, 2);
         } else if (data === "timelinebubble") {
-            activePage.data = JSON.stringify(defaultTimelineBubbleOption, null, 2);
+            activePage.data = JSON.stringify(bubbleOption, null, 2);
         }
         else {
             activePage.data = "{}";
@@ -288,6 +310,7 @@ export default function ChartDesign() {
 
         activePage.type = data;
         activePage.img = chart2svg(activePage.data, 600, 400);
+        activePage.storyTimeline = [];
         setActivePage(activePage);
         setSelectedType(data);
         const newSlide = {...slide};
@@ -300,27 +323,27 @@ export default function ChartDesign() {
 
     const handleDataChange = (newData) => {
         activePage.data = newData;
+        activePage.img = chart2svg(activePage.data, 600, 400);
         setActivePage(activePage);
         const newSlide = {...slide};
         setSlide(newSlide);
     }
 
     const handleSaveSlideData = () => {
-        console.log("slide", slide)
-        console.log("activePage", activePage)
-        console.log("textEdits", textEdits)
 
         activePage.textEdits = textEdits;
+
         slide.pages.forEach((page) => {
             if (page.index === activePage.index) {
                 page.textEdits = textEdits;
             }
+            if (!page.storyTimeline || page.storyTimeline.length <= 0) {
+                page.storyTimeline = defaultStoryTimeline.defaultStoryTimeline;
+            }
         })
 
         storageRef.child(filePath).putString(JSON.stringify(slide)).then((snapshot) => {
-            console.log('Uploaded a blob or file!');
             // update cover img
-            console.log("slide", slide)
             database.slides
                 .where("userId", "==", userId)
                 .where("name", "==", slideName)
@@ -431,6 +454,10 @@ export default function ChartDesign() {
         setTextEditShow(show);
     }
 
+    const handleTimelineDesign = () => {
+
+    }
+
     return (
         <div style={{width: '100%', height: '100vh', overflow: 'hidden'}}>
             <Layout>
@@ -442,13 +469,28 @@ export default function ChartDesign() {
                 >   
                     <Row>
                         <Col flex={90}>
-                            <img src="./logo.png" alt=""  width={40} className="design-logo"/>
+                            <img src="./logo.webp" alt=""  width={40} className="design-logo"/>
                             <h3 className="design-title"> {slideTitle} </h3>
                             <Button style={{marginLeft: '100px'}} onClick={handleInsertText}>Insert Text</Button>
+                            {/* <Button type="primary" style={{marginLeft: '10px'}} onClick={()=>setTimelineOpen(true)}>Presentation Design</Button> */}
                         </Col>
                         <Col flex={1}>
                         <Link
-                            to={`/slideshow?userId=${userId}&slide=${slideName}&title=${slideTitle}`}
+                            to={`/examples`}
+                            target={"_blank"}
+                            rel={"noopener noreferrer"}
+                            style={{
+                                textDecoration: "none",
+                                color: "inherit",
+                            }}
+                        > 
+                            <Button type="primary" danger style={{marginRight: '10px'}} icon={<AreaChartOutlined />}>
+                                Examples
+                            </Button>
+                        </Link>
+                        {/* <Link
+                            // to={`/slideshow?userId=${userId}&slide=${slideName}&title=${slideTitle}`}
+                            to={`http://localhost:3001/?model=selfie_segmentation&${displayLink}`}
                             target={"_blank"}
                             rel={"noopener noreferrer"}
                             style={{
@@ -459,7 +501,20 @@ export default function ChartDesign() {
                             <Button style={{marginRight: '10px'}} icon={<PlaySquareOutlined />}>
                                 Slideshow
                             </Button>
-                        </Link>
+                        </Link> */}
+                                <a
+                                       href={`http://localhost:3001/?model=selfie_segmentation&${displayLink}`}
+                                    target={"_blank"}
+                                    rel={"noopener noreferrer"}
+                                    style={{
+                                        textDecoration: "none",
+                                        color: "inherit",
+                                    }}
+                                >
+                                    <Button style={{marginRight: '10px'}} icon={<PlaySquareOutlined />}>
+                                    Preview Display
+                                    </Button>
+                                </a>
                         <Button type="primary" icon={<SaveOutlined />} onClick={handleSaveSlideData}>
                             Save
                         </Button>
@@ -543,8 +598,63 @@ export default function ChartDesign() {
                                     padding: 0,
                                 }}>
                                 {/* <ChartType page={activePage} key={activePage.type} type={activePage.type} chartTypeChange={handleChartTypeChange}/> */}
+
+                                <Accordion defaultActiveKey="0">
+      <Accordion.Item eventKey="0">
+        <Accordion.Header>
+            <p style={{textAlign: 'center', fontSize: '16px', fontWeight: 'bold'}}><i style={{color: '#3399ff'}} class="bi bi-bar-chart-fill"></i> {"   "} Chart Template</p>
+        </Accordion.Header>
+        <Accordion.Body>
+                                    <div style={{width: '200px', marginLeft: '40px'}}>
+                                        {
+                                            chartTypeOptions.map((option) => {
+                                                return <Card
+                                                    style={{
+                                                        width: 200,
+                                                        marginTop: 16,
+                                                        fontSize: '12px',
+                                                        fontWeight: 'normal',
+                                                    }}
+                                                    className='template-chart-border'
+
+                                                    onClick={()=>handleTemplateChartOptionsChange(option.value)}
+                                                >
+                                                    <Meta
+                                                        avatar={<Avatar src={option.icon} />}
+                                                        title={option.label}
+                                                    />
+                                                </Card>
+                                            })
+                                        }
+                                    </div>
+        </Accordion.Body>
+      </Accordion.Item>
+      <Accordion.Item eventKey="1">
+        <Accordion.Header>
+            <p style={{textAlign: 'center', fontSize: '16px', fontWeight: 'bold'}}><i style={{color: '#ff9933'}} class="bi bi-palette-fill"></i> {"   "} Chart Design</p>
+        </Accordion.Header>
+        <Accordion.Body>
+            {
+                activePage.type !== 'timelinebubble' && <ChartSettings key={activePage.data} page={activePage} onDataChange={handleDataChange}></ChartSettings>
+            } 
+            {
+                activePage.type === 'timelinebubble' && <BubbleChartSettings key={activePage.data} page={activePage} onDataChange={handleDataChange}></BubbleChartSettings>
+            }
+            
+        </Accordion.Body>
+      </Accordion.Item>
+      {/* <Accordion.Item eventKey="2">
+        <Accordion.Header>
+            <p style={{textAlign: 'center', fontSize: '16px', fontWeight: 'bold'}}><i style={{color: '#ff66b2'}} class="bi bi-megaphone-fill"></i> {"   "} Presentation Design</p>
+        </Accordion.Header>
+        <Accordion.Body>
+            <TimelineDesign key={activePage.data} page={activePage} onDataChange={handleDataChange}></TimelineDesign>
+        </Accordion.Body>
+      </Accordion.Item> */}
+      
+    </Accordion>
                                     
-                                    <p style={{textAlign: 'center', fontSize: '16px', fontWeight: 'bold', lineHeight: '30px'}}><i style={{color: '#ff9933'}} class="bi bi-palette-fill"></i> {"   "} Chart Template</p>
+                                    
                                     {/* <Form
                                         name="chartType"
                                         labelCol={{span:16}}
@@ -591,28 +701,8 @@ export default function ChartDesign() {
                                         </Form.Item>
                                         
                                     </Form> */}
-                                    <Divider />
-                                    <div style={{width: '200px', marginLeft: '40px'}}>
-                                        {
-                                            chartTypeOptions.map((option) => {
-                                                return <Card
-                                                    style={{
-                                                        width: 200,
-                                                        marginTop: 16,
-                                                        
-                                                    }}
-                                                    className='template-chart-border'
-
-                                                    onClick={()=>handleTemplateChartOptionsChange(option.value)}
-                                                >
-                                                    <Meta
-                                                        avatar={<Avatar src={option.icon} />}
-                                                        title={option.label}
-                                                    />
-                                                </Card>
-                                            })
-                                        }
-                                    </div>
+                                    {/* <Divider /> */}
+                                    
                                     
                                     {/* <OptionsSettings options={activePage.data} page={activePage} key={activePage.type} type={activePage.type} chartOptionsChange={handleChartOptionsChange}/> */}
                                 </div>
@@ -623,7 +713,27 @@ export default function ChartDesign() {
                 </div>
                 </Content>
             </Layout>
-            {contextHolder}                         
+            {contextHolder}
+
+            <Modal
+                size="lg"
+                show={timelineOpen} onHide={() => setTimelineOpen(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Modal heading</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <SinglePageTimeline page={activePage} onDataChange={handleDataChange} />
+                </Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={() => setTimelineOpen(false)}>
+                    Close
+                </Button>
+                <Button variant="primary" onClick={saveTimeline}>
+                    Save Changes
+                </Button>
+                </Modal.Footer>
+            </Modal>
+
         </div>
     );
 

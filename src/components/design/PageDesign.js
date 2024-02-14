@@ -2,11 +2,12 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import {Card, Row, Col, Tabs, Button} from 'antd'
-import { BarChartOutlined, CodeFilled, DatabaseFilled } from '@ant-design/icons';
+import { BarChartOutlined, CodeOutlined, DatabaseFilled, FileOutlined, AudioOutlined} from '@ant-design/icons';
 import MyChart from './MyChart'
 import CodeDisplay from './CodeDisplay'
-
-
+import DataUpload from './DataUpload'
+import SinglePageTimeline from "./SinglePageTimeline";
+import BubbleChartTimeline from "./BubbleChartTimeline";
 
 export default function PageDesign({page, onDataChange, onTextEdit, ...props }) {
 
@@ -17,14 +18,24 @@ export default function PageDesign({page, onDataChange, onTextEdit, ...props }) 
             icon: BarChartOutlined,
         },
         {
-            label: 'Data',
+            label: 'Option',
             key: '2',
-            icon: DatabaseFilled,
+            icon: CodeOutlined,
+        },
+        {
+            label: 'Data',
+            key: '3',
+            icon: FileOutlined,
+        },
+        {
+            label: 'Presentation Design',
+            key: '4',
+            icon: AudioOutlined,
         }
     ]
 
     if (page && page.type === 'code') {
-        tabs.push({label: 'Code', key: '3', icon: CodeFilled})
+        tabs.push({label: 'Code', key: '3', icon: CodeOutlined})
     }
     
 
@@ -94,6 +105,12 @@ export default function PageDesign({page, onDataChange, onTextEdit, ...props }) 
                 {  page && page.type === "bar" && activeTab === '1' && <MyBarChart data={JSON.parse(dataSting)} />} */}
                 {/* {  page && page.type !== "" && activeTab === '2' && <DataTable columns={columns} rows={rows}/>} */}
                 {  page && page.type !== "" && activeTab === '2' && <CodeDisplay code={dataString} onDataChange={handleDataChange}/> }
+                {  page && page.type !== "" && activeTab === '3' && <DataUpload code={dataString} onDataChange={handleDataChange}/>}
+                {  page && page.type !== "timelinebubble" && activeTab === '4' && <SinglePageTimeline page={page} onDataChange={handleDataChange}/> }
+                {
+                    page && page.type === "timelinebubble" && activeTab === '4' && <BubbleChartTimeline page={page} onDataChange={handleDataChange}/>
+                }
+                
 
             </div>
             

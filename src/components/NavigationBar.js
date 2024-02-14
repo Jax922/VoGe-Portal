@@ -12,7 +12,7 @@ export default function NavigationBar({ fixed }) {
             <Container>
                 <Navbar.Brand as={Link} to="/">
                     <img
-                        src="/logo.png"
+                        src="/logo.webp"
                         width="40"
                         height="40"
                         className="d-inline-block align-top"
@@ -27,7 +27,9 @@ export default function NavigationBar({ fixed }) {
                             lineHeight: "45px",
                             color: "#000000"
                         }
-                    }>Augmented Data Presentation</span>
+                    }><span>
+                    <font style={{color: "#0056b3"}}>Vo</font><font style={{color: "#ff7f0e"}}>Ge</font>
+                  </span> Presentation</span>
                 </Navbar.Brand>
                 {currentUser && (
                     <div>
@@ -35,8 +37,8 @@ export default function NavigationBar({ fixed }) {
                             Hi, <Link to="/user">{currentUser.email}</Link>!
                         </Navbar.Text>
 
-                        <Navbar.Toggle aria-controls="offcanvasNavbar" />
-                        <SideBar />
+                        {/* <Navbar.Toggle aria-controls="offcanvasNavbar" /> */}
+                        {/* <SideBar /> */}
                     </div>
                 )}
             </Container>

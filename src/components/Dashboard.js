@@ -43,6 +43,7 @@ export default function Dashboard() {
             .orderBy("updateTime", "desc")
             .onSnapshot((snapshot) => {
                 setSlides(snapshot.docs.map(database.formatDoc));
+                setDisplayLink(`userId=${snapshot.docs[0].data().userId}&slide=${snapshot.docs[0].data().name}&title=${snapshot.docs[0].data().title}`)
                 console.log(snapshot)
                 console.log(currentUser.uid)
             });
@@ -134,7 +135,7 @@ export default function Dashboard() {
                             {/* https://stackoverflow.com/questions/11401897/get-the-current-domain-name-with-javascript-not-the-path-etc */}
                             <CopyToClipboardButton
                                 className="m-3 p-4 bd-highlight fs-4"
-                                textToBeCopied={`${window.location.host}/display`}
+                                textToBeCopied={`http://localhost:3001/?model=selfie_segmentation&${displayLink}`}
                                 defaultText={"Copy Display Link"}
                                 onSuccessText={"Link Copied!"}
                             />

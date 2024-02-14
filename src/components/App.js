@@ -9,6 +9,7 @@ import {
 import Dashboard from "./Dashboard";
 import ChartDesign from "./design/ChartDesign";
 import SlideShow from "./design/SlideShow";
+import ChartExamples from "./ChartExamples";
 
 import Signup from "./authentication/Signup";
 import Login from "./authentication/Login";
@@ -30,6 +31,9 @@ const App = () => {
                         </PrivateRoute>
                         <PrivateRoute exact path="/slideshow">
                             <SlideShow />
+                        </PrivateRoute>
+                        <PrivateRoute exact path="/examples">
+                            <ChartExamples />
                         </PrivateRoute>
                         <Redirect exact from="/" to="/dashboard" />
                         {/* for future reference, nested routing won't work if the dashboard URL is /, that's why I changed it to dashboard */}

@@ -14,13 +14,13 @@ export default function chart2svg(options, width, height) {
     // options.toolbox = null
     // options.title = null
 
-    console.log("options", options);
+    // console.log("options", options);
       
     chart.setOption(options);
       
     const svgStr = chart.renderToSVGString();
 
-    console.log(svgStr);
+    // console.log(svgStr);
 
     return svgStr;
 }

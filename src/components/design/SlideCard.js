@@ -43,6 +43,12 @@ export default function SlideCard({ slide, ...props }) {
         );
     }
 
+    const handleGotoDisplay = () => {
+        const displayLink = `userId=${slide.userId}&slide=${slide.name}&name=${slide.title}`;
+        const link = `http://localhost:3001/?model=selfie_segmentation&${displayLink}`;
+        window.open(link, "_blank");
+    }
+
     return(
         <Card
             hoverable
@@ -60,7 +66,7 @@ export default function SlideCard({ slide, ...props }) {
                 <DeleteOutlined key="delete" className='icon-hover' onClick={openModal}/>,
                 <EditOutlined key="edit"/>,
                 // <EllipsisOutlined key="ellipsis" />,
-                <PlayCircleOutlined />
+                <PlayCircleOutlined onClick={handleGotoDisplay}/>
             ]}
         >
             <Meta title={title}/>

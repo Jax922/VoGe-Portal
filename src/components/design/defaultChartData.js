@@ -741,6 +741,13 @@ var schema = [
 ];
 
 let defaultTimelineBubbleOption = {
+  customOption: {
+      backgroundColor: "#eeeeee",
+      mode: "progressive",
+      yAxis: true,
+      xAxis: true,
+      theme: "light"
+  },
   baseOption: {
     timeline: {
       axisType: 'category',
@@ -768,20 +775,24 @@ let defaultTimelineBubbleOption = {
       {
         text: defaultTimelineBubbleData.timeline[0],
         textAlign: 'center',
-        left: '63%',
-        top: '55%',
+        left: '30%',
+        top: '15%',
         textStyle: {
-          fontSize: 100
+          fontSize: 100,
+          color: 'rgba(51,51,51,0.5)',
+          fontWeight: 'bolder'
         }
       },
       {
-        text: '各国人均寿命与GDP关系演变',
+        text: 'Life Expectancy vs. GDP per Capita Worldwide',
         left: 'center',
         top: 10,
         textStyle: {
-          fontWeight: 'normal',
-          fontSize: 20
-        }
+          fontWeight: 'bolder',
+          fontSize: 20,
+          color: "rgba(51,51,51,0.5)"
+        },
+        show: true
       }
     ],
     tooltip: {
@@ -800,38 +811,66 @@ let defaultTimelineBubbleOption = {
     grid: {
       top: 100,
       containLabel: true,
-      left: 30,
+      left: 80,
       right: '110'
     },
     xAxis: {
       type: 'log',
-      name: '人均收入',
+      name: 'Per Capita Income($)',
       max: 100000,
       min: 300,
       nameGap: 25,
       nameLocation: 'middle',
       nameTextStyle: {
-        fontSize: 18
+        fontSize: 20,
+        color: "rgba(51,51,51,0.5)",
+        fontWeight: "bolder"
       },
       splitLine: {
         show: false
       },
       axisLabel: {
-        formatter: '{value} $'
+        formatter: '{value}',
+        fontSize: 16,
+        color: "rgba(51,51,51,0.5)",
+        fontWeight: "bolder",
+        show: true
+      },
+      axisLine: {
+        lineStyle: {
+          width: 3,
+          color: "rgba(51,51,51,0.5)",
+          type: "solid"
+        },
+        show: true
       }
     },
     yAxis: {
       type: 'value',
-      name: '平均寿命',
+      name: 'Life Expectancy',
       max: 100,
-      nameTextStyle: {
-        fontSize: 18
-      },
       splitLine: {
         show: false
       },
       axisLabel: {
-        formatter: '{value} 岁'
+        formatter: '{value}',
+        fontSize: 16,
+        color: "rgba(51,51,51,0.5)",
+        fontWeight: "bolder",
+        show: true
+      },
+      nameTextStyle: {
+        fontSize: 20,
+        color: "rgba(51,51,51,0.5)",
+        fontWeight: "bolder"
+      },
+      axisLine: {
+        show: true,
+        lineStyle: {
+          "width": 3,
+          "color": "rgba(51,51,51,0.5)",
+          "type": "solid"
+        }
       }
     },
     // visualMap: [
@@ -854,7 +893,21 @@ let defaultTimelineBubbleOption = {
       {
         type: 'scatter',
         itemStyle: {
-          opacity: 0.8
+          opacity: 0.6
+        },
+        emphasis: {
+          "focus": "none",
+          "itemStyle": {
+            "borderColor": "#eeeeee",
+            "borderWidth": 4,
+            "borderType": "solid",
+            "opacity": 0.97
+          },
+            "label": {
+              "show": true,
+              "formatter": "{@[3]}",
+              "color": "#fff"
+            }
         },
         data: _getSeriesDataByLocate(defaultTimelineBubbleData.series[0], defaultTimelineBubbleData.timeline[0]),
         symbolSize: 'sizeFunction'
@@ -862,7 +915,21 @@ let defaultTimelineBubbleOption = {
       {
         type: 'scatter',
         itemStyle: {
-          opacity: 0.8
+          opacity: 0.6
+        },
+        emphasis: {
+          "focus": "none",
+          "itemStyle": {
+            "borderColor": "#eeeeee",
+            "borderWidth": 4,
+            "borderType": "solid",
+            "opacity": 0.97
+          },
+            "label": {
+              "show": true,
+              "formatter": "{@[3]}",
+              "color": "#fff"
+            }
         },
         data: _getSeriesDataByLocate(defaultTimelineBubbleData.series[1], defaultTimelineBubbleData.timeline[1]),
         symbolSize: 'sizeFunction'
@@ -870,7 +937,21 @@ let defaultTimelineBubbleOption = {
       {
         type: 'scatter',
         itemStyle: {
-          opacity: 0.8
+          opacity: 0.6
+        },
+        emphasis: {
+          "focus": "none",
+          "itemStyle": {
+            "borderColor": "#eeeeee",
+            "borderWidth": 4,
+            "borderType": "solid",
+            "opacity": 0.97
+          },
+            "label": {
+              "show": true,
+              "formatter": "{@[3]}",
+              "color": "#fff"
+            }
         },
         data: _getSeriesDataByLocate(defaultTimelineBubbleData.series[2], defaultTimelineBubbleData.timeline[2]),
         symbolSize: 'sizeFunction'
@@ -878,7 +959,21 @@ let defaultTimelineBubbleOption = {
       {
         type: 'scatter',
         itemStyle: {
-          opacity: 0.8
+          opacity: 0.6
+        },
+        emphasis: {
+          "focus": "none",
+          "itemStyle": {
+            "borderColor": "#eeeeee",
+            "borderWidth": 4,
+            "borderType": "solid",
+            "opacity": 0.97
+          },
+            "label": {
+              "show": true,
+              "formatter": "{@[3]}",
+              "color": "#fff"
+            }
         },
         data: _getSeriesDataByLocate(defaultTimelineBubbleData.series[3], defaultTimelineBubbleData.timeline[3]),
         symbolSize: 'sizeFunction'
