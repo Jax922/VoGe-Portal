@@ -322,7 +322,6 @@ function ChartSettings({ page, onDataChange, ...props }) {
     const [chartTheme, setChartTheme] = useState(initChartTheme)
 
     const handleChartThemeChange = (e) => {
-        console.log("new value settings: ", e.target.value);
         setChartTheme(e.target.value);
         let parsedData = JSON.parse(page.data);
         parsedData.customOption.theme = e.target.value;
@@ -353,7 +352,6 @@ function ChartSettings({ page, onDataChange, ...props }) {
     }
 
     const handleRenderingModeChange = (e) => {
-        console.log("new value settings: ", e.target.value);
         setRenderingMode(e.target.value);
         const parsedData = JSON.parse(page.data);
         parsedData.customOption.mode = e.target.value;
@@ -361,9 +359,7 @@ function ChartSettings({ page, onDataChange, ...props }) {
     }
 
     const handleXAxisShowChange = (e) => {
-        console.log("x-axis settings: ", e.target.checked);
         setXAxisShow(e.target.checked);
-        console.log("x-axis settings state: ", xAxisShow);
         let parsedData = JSON.parse(page.data);
         parsedData.customOption["xAxis"] = e.target.checked;
         parsedData = hiddleAxis("xAxis", parsedData, e.target.checked);
@@ -371,9 +367,7 @@ function ChartSettings({ page, onDataChange, ...props }) {
     }
 
     const handleYAxisShowChange = (e) => {
-        console.log("y-axis settings: ", e.target.checked);
         setYAxisShow(e.target.checked);
-        console.log("y-axis settings state: ", yAxisShow);
         let parsedData = JSON.parse(page.data);
         parsedData.customOption["yAxis"] = e.target.checked;
         parsedData = hiddleAxis("yAxis", parsedData, e.target.checked);
@@ -851,7 +845,7 @@ function ChartSettings({ page, onDataChange, ...props }) {
                 borderTop: "3px dotted #bbb"
             }}/>
             <p>
-                <strong>Title Settings</strong>
+                <strong>Title</strong>
                 <Form.Check // prettier-ignore
                     onChange={handleTitleShowChange}
                     style={{ float: "right" }}
@@ -933,7 +927,7 @@ function ChartSettings({ page, onDataChange, ...props }) {
                 borderTop: "3px dotted #bbb"
             }}/>
             <p>
-                <strong>X Axis Settings</strong>
+                <strong>X Axis</strong>
                 <Form.Check // prettier-ignore
                     onChange={handleXAxisShowChange}
                     style={{ float: "right" }}
@@ -1069,7 +1063,7 @@ function ChartSettings({ page, onDataChange, ...props }) {
             }}/>
                 
             <p>
-                <strong>Y Axis Settings</strong>
+                <strong>Y Axis</strong>
                 <Form.Check // prettier-ignore
                     onChange={handleYAxisShowChange}
                     style={{ float: "right" }}
@@ -1214,7 +1208,7 @@ function ChartSettings({ page, onDataChange, ...props }) {
                                 </p>
 
                                 <p>
-                                    <strong>Basic Settings</strong>
+                                    <strong>Basic</strong>
                                 </p>
 
                                 <InputGroup className="mb-3">
@@ -1293,7 +1287,7 @@ function ChartSettings({ page, onDataChange, ...props }) {
 
                                 
                                     <p>
-                                        <strong>Label Settings</strong>
+                                        <strong>Label</strong>
                                         <Form.Check // prettier-ignore
                                         onChange={e => handleLabelShowChange(e, i)}
                                         style={{ float: "right" }}
@@ -1361,7 +1355,7 @@ function ChartSettings({ page, onDataChange, ...props }) {
 
 
                                 <p>
-                                    <strong>Highlight Settings</strong>
+                                    <strong>Highlight</strong>
                                 </p>
 
                                 <InputGroup className="mb-3">
@@ -1431,10 +1425,6 @@ function ChartSettings({ page, onDataChange, ...props }) {
 
                     })
                 }
-
-            
-
-        
         </>
 
     )

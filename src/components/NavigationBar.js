@@ -29,7 +29,7 @@ export default function NavigationBar({ fixed }) {
                         }
                     }><span>
                     <font style={{color: "#0056b3"}}>Vo</font><font style={{color: "#ff7f0e"}}>Ge</font>
-                  </span> Presentation</span>
+                  </span> Present</span>
                 </Navbar.Brand>
                 {currentUser && (
                     <div>

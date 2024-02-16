@@ -471,7 +471,7 @@ export default function ChartDesign() {
                         <Col flex={90}>
                             <img src="./logo.webp" alt=""  width={40} className="design-logo"/>
                             <h3 className="design-title"> {slideTitle} </h3>
-                            <Button style={{marginLeft: '100px'}} onClick={handleInsertText}>Insert Text</Button>
+                            {/* <Button style={{marginLeft: '100px'}} onClick={handleInsertText}>Insert Text</Button> */}
                             {/* <Button type="primary" style={{marginLeft: '10px'}} onClick={()=>setTimelineOpen(true)}>Presentation Design</Button> */}
                         </Col>
                         <Col flex={1}>
@@ -512,7 +512,7 @@ export default function ChartDesign() {
                                     }}
                                 >
                                     <Button style={{marginRight: '10px'}} icon={<PlaySquareOutlined />}>
-                                    Preview Display
+                                        Preview
                                     </Button>
                                 </a>
                         <Button type="primary" icon={<SaveOutlined />} onClick={handleSaveSlideData}>
@@ -602,7 +602,7 @@ export default function ChartDesign() {
                                 <Accordion defaultActiveKey="0">
       <Accordion.Item eventKey="0">
         <Accordion.Header>
-            <p style={{textAlign: 'center', fontSize: '16px', fontWeight: 'bold'}}><i style={{color: '#3399ff'}} class="bi bi-bar-chart-fill"></i> {"   "} Chart Template</p>
+            <p style={{textAlign: 'center', fontSize: '16px', fontWeight: 'bold'}}><i style={{color: '#3399ff'}} class="bi bi-bar-chart-fill"></i> {"   "} Library</p>
         </Accordion.Header>
         <Accordion.Body>
                                     <div style={{width: '200px', marginLeft: '40px'}}>
@@ -631,7 +631,7 @@ export default function ChartDesign() {
       </Accordion.Item>
       <Accordion.Item eventKey="1">
         <Accordion.Header>
-            <p style={{textAlign: 'center', fontSize: '16px', fontWeight: 'bold'}}><i style={{color: '#ff9933'}} class="bi bi-palette-fill"></i> {"   "} Chart Design</p>
+            <p style={{textAlign: 'center', fontSize: '16px', fontWeight: 'bold'}}><i style={{color: '#ff9933'}} class="bi bi-palette-fill"></i> {"   "} Setting</p>
         </Accordion.Header>
         <Accordion.Body>
             {

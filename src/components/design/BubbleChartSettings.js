@@ -4,8 +4,6 @@ import InputGroup from 'react-bootstrap/InputGroup';
 
 function BubbleChartSettings({ page, onDataChange, ...props }) {
 
-    console.log("page settings: ", page);
-    
     const parsedData = page&&page.data ? JSON.parse(page.data) : {};
     const baseOptions = parsedData.baseOption || {};
     let initTitles = baseOptions.title || [];
@@ -554,7 +552,7 @@ function BubbleChartSettings({ page, onDataChange, ...props }) {
 
 
             <p>
-                <strong>Title Settings</strong>
+                <strong>Title</strong>
                 <Form.Check // prettier-ignore
                     onChange={handleChartTitleShowChange}
                     style={{ float: "right" }}
@@ -638,7 +636,7 @@ function BubbleChartSettings({ page, onDataChange, ...props }) {
             
 
             <p>
-                <strong>Year Settings</strong>
+                <strong>Year</strong>
                 {/* <Form.Check // prettier-ignore
                     onChange={handleYearTitleShowChange}
                     style={{ float: "right" }}
@@ -752,7 +750,7 @@ function BubbleChartSettings({ page, onDataChange, ...props }) {
             <div>
 
             <p>
-                <strong>X Axis Settings</strong>
+                <strong>X Axis</strong>
                 {/* <Form.Check // prettier-ignore
                     onChange={handleXAxisShowChange}
                     style={{ float: "right" }}
@@ -884,7 +882,7 @@ function BubbleChartSettings({ page, onDataChange, ...props }) {
             </div>
 
             <p>
-                <strong>Y Axis Settings</strong>
+                <strong>Y Axis</strong>
                 {/* <Form.Check // prettier-ignore
                     onChange={handleYAxisShowChange}
                     style={{ float: "right" }}

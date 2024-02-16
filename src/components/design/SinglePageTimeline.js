@@ -377,7 +377,7 @@ function SinglePageTimeline({ page, onDataChange, ...props }) {
                     </div>
                 </div>
                 <div>
-                    <p className="pre-step-title">Story Timeline and Script</p>
+                    <p className="pre-step-title">AutoScript</p>
                 </div>
                 <div className="pre-script-container">
                 <Tabs

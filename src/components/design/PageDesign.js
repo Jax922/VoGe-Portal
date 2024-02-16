@@ -18,17 +18,17 @@ export default function PageDesign({page, onDataChange, onTextEdit, ...props }) 
             icon: BarChartOutlined,
         },
         {
-            label: 'Option',
+            label: 'Editor',
             key: '2',
             icon: CodeOutlined,
         },
         {
-            label: 'Data',
+            label: 'Uploads',
             key: '3',
             icon: FileOutlined,
         },
         {
-            label: 'Presentation Design',
+            label: 'Design',
             key: '4',
             icon: AudioOutlined,
         }

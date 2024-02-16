@@ -136,8 +136,8 @@ export default function Dashboard() {
                             <CopyToClipboardButton
                                 className="m-3 p-4 bd-highlight fs-4"
                                 textToBeCopied={`http://localhost:3001/?model=selfie_segmentation&${displayLink}`}
-                                defaultText={"Copy Display Link"}
-                                onSuccessText={"Link Copied!"}
+                                defaultText={"Copy Link"}
+                                onSuccessText={"Link Copied"}
                             />
                             {/* open the display in new browser tab */}
                             <Form.Select onChange={handleDisplaySelect} style={{width: '300px'}} className="m-3 p-4 bd-highlight fs-4" aria-label="Default select example">
@@ -150,7 +150,7 @@ export default function Dashboard() {
                                 }
                             </Form.Select>
 
-                            <Button variant="success" className="m-3 p-4 bd-highlight fs-4">
+                            <Button variant="primary" className="m-3 p-4 bd-highlight fs-4">
                                 <a
                                     href={`http://localhost:3001/?model=selfie_segmentation&${displayLink}`}
                                     target={"_blank"}
@@ -162,14 +162,13 @@ export default function Dashboard() {
                                 >   
                                     <i className="bi bi-display"></i>
                                     {" "}
-                                    Preview Display
+                                    Preview
                                 </a>
                             </Button>
                         </Container>
                     </Col>
                 </Row>
                 <Row className="p-3 mt-4 bg-light">
-                    <Row>
                         <Col>
                             <Container
                                 fluid
@@ -178,14 +177,18 @@ export default function Dashboard() {
                                 <div className="p-2 flex-grow-1 bd-highlight fs-2">
                                     My Slides
                                 </div>
-                                <Button className="bd-highlight" onClick={handleModalShow}>
+                                {/* <Button className="bd-highlight" onClick={handleModalShow}>
+                                    <i className="bi bi-file-earmark-plus"></i>
+                                    {" "}
+                                    Create New Slides
+                                </Button> */}
+                                <Button variant="primary" onClick={handleModalShow} className="m-3 p-4 bd-highlight fs-4">
                                     <i className="bi bi-file-earmark-plus"></i>
                                     {" "}
                                     Create New Slides
                                 </Button>
                             </Container>
                         </Col>
-                    </Row>
                     {
                         slides.length === 0 && emptyTip()
                     }
