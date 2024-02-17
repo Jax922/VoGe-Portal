@@ -44,6 +44,7 @@ export default function PageDesign({page, onDataChange, onTextEdit, ...props }) 
 
     const [activeTab, setActiveTab] = useState(tabs[0].key)
     const [dataString, setDataString] = useState(page.data)
+    const [chartType, setChartType] = useState(page.type)
 
     const handleTabChange = (key) => {
         setActiveTab(key);
@@ -105,7 +106,7 @@ export default function PageDesign({page, onDataChange, onTextEdit, ...props }) 
                 {  page && page.type === "bar" && activeTab === '1' && <MyBarChart data={JSON.parse(dataSting)} />} */}
                 {/* {  page && page.type !== "" && activeTab === '2' && <DataTable columns={columns} rows={rows}/>} */}
                 {  page && page.type !== "" && activeTab === '2' && <CodeDisplay code={dataString} onDataChange={handleDataChange}/> }
-                {  page && page.type !== "" && activeTab === '3' && <DataUpload code={dataString} onDataChange={handleDataChange}/>}
+                {  page && page.type !== "" && activeTab === '3' && <DataUpload type={chartType} code={dataString} onDataChange={handleDataChange}/>}
                 {  page && page.type !== "timelinebubble" && activeTab === '4' && <SinglePageTimeline page={page} onDataChange={handleDataChange}/> }
                 {
                     page && page.type === "timelinebubble" && activeTab === '4' && <BubbleChartTimeline page={page} onDataChange={handleDataChange}/>

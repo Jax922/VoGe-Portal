@@ -469,7 +469,7 @@ export default function ChartDesign() {
                 >   
                     <Row>
                         <Col flex={90}>
-                            <img src="./logo.webp" alt=""  width={40} className="design-logo"/>
+                            <img src="./logo.png" alt=""  width={40} className="design-logo"/>
                             <h3 className="design-title"> {slideTitle} </h3>
                             {/* <Button style={{marginLeft: '100px'}} onClick={handleInsertText}>Insert Text</Button> */}
                             {/* <Button type="primary" style={{marginLeft: '10px'}} onClick={()=>setTimelineOpen(true)}>Presentation Design</Button> */}

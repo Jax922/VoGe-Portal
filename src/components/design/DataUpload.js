@@ -2,6 +2,30 @@ import React, { useState, useEffect} from "react";
 import { UploadOutlined, PlayCircleOutlined,ClearOutlined } from '@ant-design/icons';
 import { Button, message, Upload } from 'antd';
 import Form from 'react-bootstrap/Form';
+import { op } from "stardust-core/dist/specification/construct";
+
+// "backgroundColor": "#eeeeee",
+// "timelineNodeIdx": 0,
+// "NLUMode": "hybrid",
+// "mode": "progressive",
+// "yAxis": true,
+// "xAxis": true,
+// "theme": "light",
+// "height": "600px",
+
+let colors = [
+    "blue",
+    "green",
+    "yellow",
+    "red",
+    "cerulean",
+    "teal",
+    "orange",
+    "purple",
+    "pink"
+]
+
+
 
 function processData(csv) {
     const lines = csv.split("\n");
@@ -35,14 +59,63 @@ function processData(csv) {
         }
     }
 
-    console.log("X Axis:", xAxis);
-    console.log("Data:", data);
     return { xAxisName, xAxis, data };
 }
 
+function processDataBubble(csv) {
+    const lines = csv.split("\n");
 
-function DataUpload({code, onDataChange, ...props}) {
+    const firstLineCells = lines[0].split(",");
+
+    const data = {};
+    const years = [];
+    let maxXAxis = 0;
+    let maxYAxis = 0;
+    let minBubbleSize = 100000000000;
+    let maxBubbleSize = 0;
+
+    for (let i = 1; i < lines.length; i++) {
+        if (lines[i] === "") {
+            continue;
+        }
+        const currentLine = lines[i].split(",");
+
+        if(!data[currentLine[5]]) {
+            data[currentLine[5]] = [];
+            years.push(currentLine[5]);
+        }
+
+        if (!data[currentLine[5]][currentLine[0]]) {
+            data[currentLine[5]][currentLine[0]] = [];
+        }
+
+        data[currentLine[5]][currentLine[0]].push([currentLine[1], currentLine[2], currentLine[3], currentLine[4], currentLine[5]]);
+
+        if (Number(currentLine[1]) > maxXAxis) {
+            maxXAxis = Number(currentLine[1]);
+        }
+
+        if (Number(currentLine[2]) > maxYAxis) {
+            maxYAxis = Number(currentLine[2]);
+        }
+
+        if (Number(currentLine[3]) > maxBubbleSize) {
+            maxBubbleSize = Number(currentLine[3]);
+        }
+
+        if (Number(currentLine[3]) < minBubbleSize) {
+            minBubbleSize = Number(currentLine[3]);
+        }
+    }
+
+    return { data, years, maxXAxis, maxYAxis, minBubbleSize, maxBubbleSize };
+    
+}
+
+
+function DataUpload({code, type, onDataChange, ...props}) {
     const [fileList, setFileList] = useState([]);
+
 
     const rgbs = [
         "#CCCCFF",
@@ -58,12 +131,21 @@ function DataUpload({code, onDataChange, ...props}) {
         {link: './exampleDatasets/example-dataset-barchart.csv', name: 'example-dataset-barchart.csv'},
     ]
 
+    // timelinebubble
+
     const handleFileUpload = (e) => {
         const file = e.target.files[0];
         const reader = new FileReader();
+        if (type === 'timelinebubble') {
+            bubbleFileUpload(file, reader);
+        } else {
+            normalFileUpload(file, reader);
+        }
+    }
+
+    const normalFileUpload = (file, reader) => {
         reader.onload = (event) => {
             const data = event.target.result;
-            // onDataChange(data);
             const result = processData(data);
             let option = JSON.parse(code);
 
@@ -85,9 +167,110 @@ function DataUpload({code, onDataChange, ...props}) {
 
             onDataChange(JSON.stringify(option, null, 2));
 
+        };
+        reader.readAsText(file);
+    }
 
-            console.log("Result:", JSON.parse(code));
-            console.log(result);
+    const bubbleFileUpload = (file, reader) => {
+        reader.onload = (event) => {
+            const data = event.target.result;
+            const result = processDataBubble(data);
+
+            let option = JSON.parse(code);
+
+            const groupData = result.data;
+            const timelineYears = result.years;
+            
+            if (option.customOption.splitData) {
+                option.customOption.splitData = []
+            }
+
+            // update bubble size
+            option.customOption.minValue = result.minBubbleSize;
+            option.customOption.maxValue = result.maxBubbleSize;
+            option.customOption.minSize = 10;
+            option.customOption.maxSize = 100;
+            
+            // update years
+            option.baseOption.timeline.data = timelineYears;
+            option.baseOption.title[0].text = timelineYears[0];
+
+            // update series
+            const groupKeys = Object.keys(groupData[timelineYears[0]]);
+
+            if (groupKeys.length <= 4) {
+                groupKeys.forEach((key, index) => {
+                    option.baseOption.series[0].data[index].name = key;
+                    option.baseOption.series[0].data[index].data = groupData[timelineYears[0]][key];
+                });
+                for (let i = groupKeys.length; i < 4; i++) {
+                    option.baseOption.series[0].data[i].name = "";
+                    option.baseOption.series[0].data[i].data = [];
+                }
+            }
+
+            if (groupKeys.length > 4) {
+                groupKeys.forEach((key, index) => {
+                    if (index < 4) {
+                        option.baseOption.series[0].data[index].name = key;
+                        option.baseOption.series[0].data[index].data = groupData[timelineYears[0]][key];
+                    } else {
+                        option.baseOption.series[0].data.push(JSON.parse(JSON.stringify(option.baseOption.series[0])));
+                        option.baseOption.series[0].data[index].dataColorname = colors[index];
+                        option.baseOption.series[0].data[index].name = key;
+                        option.baseOption.series[0].data[index].data = groupData[timelineYears[0]][key];
+                    }
+                });
+            }
+
+            option.baseOption.series = [option.baseOption.series[0]];
+
+            option.baseOption.xAxis.type = "value";
+            option.baseOption.xAxis.min = 0;
+            option.baseOption.xAxis.max = result.maxXAxis;
+            option.baseOption.yAxis.type = "value";
+            option.baseOption.yAxis.min = 0;
+            option.baseOption.yAxis.max = result.maxYAxis;
+
+           
+
+            let oneOption = {
+                title: {
+                    show: true,
+                    text: ""
+                },
+                series: []
+            }
+
+            let oneSerie = {
+                name: "",
+                type: "scatter",
+                itemStyle: {
+                    opacity: 0.8
+                },
+                data: [],
+                symbolSize: "sizeFunction"
+            }
+            option.options = [];
+
+            for (const yearKey in groupData) {
+                let copyOption = JSON.parse(JSON.stringify(oneOption));
+                copyOption.title.text = yearKey;
+
+                for (const legendKey in groupData[yearKey]) {
+                    let copySerie = JSON.parse(JSON.stringify(oneSerie));
+                    copySerie.name = legendKey;
+                    copySerie.data = groupData[yearKey][legendKey];
+                    copyOption.series.push(copySerie);
+                }
+                option.options.push(copyOption);
+            }
+
+            // option.series = option.series.slice(0, result.data.length);
+
+            console.log("bubble option", option);
+
+            onDataChange(JSON.stringify(option, null, 2));
 
         };
         reader.readAsText(file);

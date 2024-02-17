@@ -12,7 +12,7 @@ export default function NavigationBar({ fixed }) {
             <Container>
                 <Navbar.Brand as={Link} to="/">
                     <img
-                        src="/logo.webp"
+                        src="/logo.png"
                         width="40"
                         height="40"
                         className="d-inline-block align-top"
