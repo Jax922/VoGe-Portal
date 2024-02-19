@@ -72,7 +72,7 @@ const defaultBarChartData = {
       "color": "rgba(51,51,51,0.5)",
       "fontWeight": "bolder",
       "padding": [
-        30,
+        20,
         30
       ]
     },
@@ -86,7 +86,7 @@ const defaultBarChartData = {
     },
     "type": "value",
     "name": "Y axis name",
-    "nameLocation": "center"
+    "nameLocation": "end"
   },
   "series": [
     {

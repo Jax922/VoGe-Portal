@@ -1073,8 +1073,9 @@ function ChartSettings({ page, onDataChange, ...props }) {
                     checked={yAxisShow}
                 />
             </p>
+            <div style={{display: yAxisShow ? "block" : "none"}}>
                 <InputGroup className="mb-3">
-                    <Form.Control type="text" value={yAxisName} placeholder="X-Axis Name" onChange={handleUpdateYAxisName}/>
+                    <Form.Control type="text" value={yAxisName} placeholder="Y-Axis Name" onChange={handleUpdateYAxisName}/>
                     <button className="btn btn-primary" onClick={updateYAxisName}>Apply</button>
                 </InputGroup>
                 <InputGroup className="mb-3">
@@ -1114,7 +1115,7 @@ function ChartSettings({ page, onDataChange, ...props }) {
                         <option value="end">end</option>
                     </Form.Select>
                 </InputGroup>
-            <div style={{display: yAxisShow ? "block" : "none"}}>
+            
                 <InputGroup className="mb-3">
                     <InputGroup.Text id="inputGroup-sizing-default">
                     Line Type
