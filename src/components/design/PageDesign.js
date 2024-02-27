@@ -78,7 +78,16 @@ export default function PageDesign({page, onDataChange, onTextEdit, ...props }) 
                     height: '100%',
                     padding: 0,
                 }}
-            >
+            >   
+                {
+                    //  empty page
+                    page && !page.type && <div style={{textAlign: 'center', marginTop: '5%'}}>
+                        <img src="./empty_chart.png" alt="empty chart" style={{width: '50%'}}/>
+                        <h4 style={{
+                            color: '#999999',
+                        }}>Please select a chart type from the Library on the right!</h4>
+                    </div>
+                }
                 {
                     page && page.type !== "" && 
                     <Tabs

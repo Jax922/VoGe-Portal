@@ -72,9 +72,9 @@ const YAxisLabels = [
 
 const dataElements = [
     "Let's focus on the [X-Axis Tick Name], and the value reached [Insert Specific Value], Let's delve into [Behind Reason, etc].",
-    "In [X-Axis Tick Name], we see a [Insert Comparison, e.g., significant increase, slight decline]. This comparison sheds light on the trends and [The Facts of the trends].",
-    "Look at the [X-Axis Tick Name], where we see a [Insert Comparison, e.g., significant increase, slight decline]. This comparison reveals the trends and [The Facts of the trends].",
-    "Observe the [X-Axis Tick Name], where we see a [Insert Comparison, e.g., significant increase, slight decline]. This comparison illuminates the trends and [The Facts of the trends]."
+    "In [X-Axis Tick Name], which value is [Insert Specific Value]. This comparison sheds light on the trends and [The Facts of the trends].",
+    "Look at the [X-Axis Tick Name], where we see a [Insert Specific Value]. This comparison reveals the trends and [The Facts of the trends].",
+    "Observe the [X-Axis Tick Name], where we see a value of [Insert Specific Value]. This comparison illuminates the trends and [The Facts of the trends]."
 ]
 
 export default {

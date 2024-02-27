@@ -465,6 +465,7 @@ export default function ChartDesign() {
                     style={{
                         padding: 0,
                         background: colorBgContainer,
+                        borderBottom: '1px solid #ccc',
                     }}
                 >   
                     <Row>

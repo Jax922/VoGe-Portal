@@ -143,6 +143,10 @@ const bubbleOption = {
       ]
     },
     "baseOption": {
+      "legend": {
+        "right": 80,
+        "top": 50
+      },
       "timeline": {
         "axisType": "category",
         "orient": "vertical",

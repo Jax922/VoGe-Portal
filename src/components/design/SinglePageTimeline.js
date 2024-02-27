@@ -218,10 +218,41 @@ function SinglePageTimeline({ page, onDataChange, ...props }) {
 
     const handleAddDataELementNode = (e) => {
         const dataElementContents = storyTimelineData[3].contents;
+        
+        let xAxisTickName = selectDataElementNode;
+        let specificValue = "";
+        let allScriptStr = "";
+        
+        if (pageData && pageData.series && pageData.series.length) {
+                
+                pageData.series.forEach((serie, index) => {
+                    let scriptStr = getRandomElement(scriptTemplate.dataElements)
+                    scriptStr = "In the [" + serie.name + "] series, " + scriptStr;
+                    scriptStr = scriptStr.replace("X-Axis Tick Name", xAxisTickName);
+                    pageData.xAxis.data.forEach((data, index) => {
+                        if (data.toLowerCase() === xAxisTickName.toLowerCase()) {
+                            specificValue = serie.data[index];
+                            scriptStr = scriptStr.replace("Insert Specific Value", specificValue);
+                        }
+                    })
+                    allScriptStr =  allScriptStr + scriptStr + " ";
+                    // serie.data.forEach((data, index) => {
+                    //     if (data.toLowerCase() === xAxisTickName.toLowerCase()) {
+                    //         specificValue = serie.data[index];
+                    //         scriptStr = scriptStr.replace("[Insert Specific Value]", specificValue);
+                    //     }
+                    // })
+                })
+                
+                
+        }
+
+       
+
         dataElementContents.push({
             type: "Data-Element",
             timeNode: selectDataElementNode,
-            script: getRandomElement(scriptTemplate.dataElements)
+            script: allScriptStr
         });
         setStoryTimelineData(storyTimelineData);
         setViewStoryTimeline(handleViewOfStoryTimeline(storyTimelineData));
@@ -389,7 +420,7 @@ function SinglePageTimeline({ page, onDataChange, ...props }) {
                     {
                         viewStoryTimeline.map((content, index) => {
                             return (
-                                <Tab eventKey={content.timeNode} title={content.timeNode} key={index}>
+                                <Tab eventKey={content.timeNode+String(index)} title={content.timeNode} key={index}>
                                     <Form>
                                         <Form.Control as="textarea" rows={5} value={content.script} onChange={(e) => handleStoryScript(e, content.timeNode, index)}/>
                                     </Form>

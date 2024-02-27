@@ -43,9 +43,9 @@ export default function Dashboard() {
             .orderBy("updateTime", "desc")
             .onSnapshot((snapshot) => {
                 setSlides(snapshot.docs.map(database.formatDoc));
-                setDisplayLink(`userId=${snapshot.docs[0].data().userId}&slide=${snapshot.docs[0].data().name}&title=${snapshot.docs[0].data().title}`)
-                console.log(snapshot)
-                console.log(currentUser.uid)
+                if (snapshot.docs.length > 0) {
+                    setDisplayLink(`userId=${snapshot.docs[0].data().userId}&slide=${snapshot.docs[0].data().name}&title=${snapshot.docs[0].data().title}`)
+                }
             });
         
         return cleanup;
@@ -293,7 +293,7 @@ export default function Dashboard() {
                 </Button>
                 </Modal.Footer>
             </Modal>
-            <Footer style={{ textAlign: 'center', marginTop: '120px' }}>Chart Design ©2023 Copyright</Footer>
+            <Footer style={{ textAlign: 'center', marginTop: '120px' }}>Chart Design ©2024 Copyright</Footer>
         </div>
     );
 }

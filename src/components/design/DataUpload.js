@@ -33,6 +33,11 @@ function processData(csv) {
     const xAxis = [];
     const firstLineCells = lines[0].split(",");
     const xAxisName = firstLineCells[0]; 
+    let yAxisName = "";
+
+    if (firstLineCells.length === 2) {
+        yAxisName = firstLineCells[1];
+    }
 
     const data = [];
 
@@ -59,13 +64,15 @@ function processData(csv) {
         }
     }
 
-    return { xAxisName, xAxis, data };
+    return { xAxisName, yAxisName, xAxis, data };
 }
 
 function processDataBubble(csv) {
     const lines = csv.split("\n");
 
     const firstLineCells = lines[0].split(",");
+    const xAxisName = firstLineCells[1];
+    const yAxisName = firstLineCells[2];
 
     const data = {};
     const years = [];
@@ -108,7 +115,7 @@ function processDataBubble(csv) {
         }
     }
 
-    return { data, years, maxXAxis, maxYAxis, minBubbleSize, maxBubbleSize };
+    return { data, years, maxXAxis, maxYAxis, minBubbleSize, maxBubbleSize, xAxisName, yAxisName };
     
 }
 
@@ -151,6 +158,9 @@ function DataUpload({code, type, onDataChange, ...props}) {
 
             option.xAxis.data = result.xAxis;
             option.xAxis.name = result.xAxisName;
+            if (result.yAxisName !== "") {
+                option.yAxis.name = result.yAxisName;
+            }
 
 
             for (let i = 0; i < result.data.length; i++) {
@@ -184,6 +194,8 @@ function DataUpload({code, type, onDataChange, ...props}) {
             if (option.customOption.splitData) {
                 option.customOption.splitData = []
             }
+            //
+            option.customOption["uploadData"] = "yes";
 
             // update bubble size
             option.customOption.minValue = result.minBubbleSize;
@@ -194,6 +206,10 @@ function DataUpload({code, type, onDataChange, ...props}) {
             // update years
             option.baseOption.timeline.data = timelineYears;
             option.baseOption.title[0].text = timelineYears[0];
+
+            // update xAxis and yAxis
+            option.baseOption.xAxis.name = result.xAxisName;
+            option.baseOption.yAxis.name = result.yAxisName;
 
             // update series
             const groupKeys = Object.keys(groupData[timelineYears[0]]);
@@ -282,7 +298,7 @@ function DataUpload({code, type, onDataChange, ...props}) {
             height: '70vh',
             border: '1px solid #ccc',
             borderRadius: '4px',
-            padding: '10px',
+            padding: '0px 10px',
             boxSizing: 'border-box',
             textAlign: 'center'
         }}>
@@ -291,8 +307,6 @@ function DataUpload({code, type, onDataChange, ...props}) {
                 <Button style={{marginLeft: '10px'}} icon={<ClearOutlined />}>Clear</Button>
                 <Button style={{marginLeft: '10px'}} type="primary" icon={<PlayCircleOutlined />} >Run</Button>
             </div> */}
-            <br />
-            <br />
             <br />
             <Form.Group controlId="formFile" id="csvFile" className="mb-3">
                 <Form.Control type="file" onChange={handleFileUpload} />

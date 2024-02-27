@@ -2,6 +2,9 @@ import React, { useRef, useState, useEffect } from 'react';
 import lineChartExamples from './examples/lineChartExamples';
 import barChartExamples from './examples/barChartExamples';
 import MyChart from './design/ExampleChartRender';
+import { Layout, Menu, theme } from 'antd';
+
+const { Header, Content, Footer, Sider } = Layout;
 
 const ChartExamples = () => {
 
@@ -52,9 +55,9 @@ const ChartExamples = () => {
                 JSON data copied!
             </div>
             <header className="example-header">
-                <h2><span>
-                    <font style={{color: "#0056b3"}}>Vo</font><font style={{color: "#ff7f0e"}}>Ge</font>
-                  </span> Chart Examples</h2>
+                <h2>
+                    VoGe
+                   Chart Examples</h2>
             </header>
 
             <div class="example-chart-container">
@@ -63,7 +66,7 @@ const ChartExamples = () => {
                         return (
                             
                             <div class="example-examplechart" id={`chart${index}`}>
-                                <MyChart data={example.data}  container={`mychart${index}`}/>
+                                
                                 <div class="example-examplechart-title">
                                     <p>{example.name}</p>
                                     <hr style={{
@@ -78,11 +81,15 @@ const ChartExamples = () => {
                                         </button>
                                     </div>
                                 </div>
+                                <MyChart style={{
+                                    marginLeft: "10px"
+                                }} data={example.data}  container={`mychart${index}`}/>
                             </div>
                         )
                     })
                 }
             </div>
+            <Footer style={{ textAlign: 'center', marginTop: '120px' }}>Chart Design ©2024 Copyright</Footer>
         </>
     )
 }

@@ -23,6 +23,12 @@ function getRandomElement(arr) {
     return null;
 }
 
+const scriptTemplateOfBubbleChart = [
+    "In year of [Year], [Data Elemens], which means [Specifics].",
+    "Observe the [Year], where we see , [Data Elements]. This comparison illuminates the trends and [The Facts of the trends].",
+    "Look at the [Year], which value is [Data Elements]. This comparison sheds light on the trends and [The Facts of the trends].",
+]
+
 
 const defaultStoryTimeline = [
     {
@@ -205,35 +211,60 @@ function SinglePageTimeline({ page, onDataChange, ...props }) {
 
 
     if (page){
-        if (!page.storyTimeline || page.storyTimeline.length === 0) {
+        if (!page.storyTimeline || page.storyTimeline.length === 0 || pageData.customOption.uploadData == "yes") {
             // defaultStoryTimeline[3].contents = initDataElementNode(pageData);
+            pageData.customOption.uploadData = "no";
+            defaultStoryTimeline[3].contents = [];
 
-            defaultStoryTimeline[3].contents.push({
-                type: "Data-Element",
-                timeNode: timelineYears[0],
-                dataNode: dataGroup[0].key+"("+dataGroup[0].colorName+")",
-                script: getRandomElement(scriptTemplate.dataElements)
-            });
+            
 
-            defaultStoryTimeline[3].contents.push({
-                type: "Data-Element",
-                timeNode: timelineYears[0],
-                dataNode: dataGroup[1].key+"("+dataGroup[1].colorName+")",
-                script: getRandomElement(scriptTemplate.dataElements)
-            });
+            dataGroup.forEach((dataItem, index) => {
 
-            defaultStoryTimeline[3].contents.push({
-                type: "Data-Element",
-                timeNode: timelineYears[0],
-                dataNode: dataGroup[2].key+"("+dataGroup[2].colorName+")",
-                script: getRandomElement(scriptTemplate.dataElements)
-            });
+                if (dataItem.key && dataItem.colorName) {
 
-            defaultStoryTimeline[3].contents.push({
-                type: "Data-Element",
-                timeNode: timelineYears[0],
-                dataNode: dataGroup[3].key+"("+dataGroup[3].colorName+")",
-                script: getRandomElement(scriptTemplate.dataElements)
+
+
+                let scriptBubbleChart = "";
+                let nodeName = dataItem.key+"("+dataItem.colorName+")";
+
+                if (pageData && pageData.options) {
+                    pageData.options.forEach(option => {
+                        let str = getRandomElement(scriptTemplateOfBubbleChart);
+                        if (option.title && option.title.text == String(timelineYears[0])) {
+                            str = str.replace("[Year]", option.title.text);
+                            if(option.series) {
+                                option.series.forEach(serie => {
+                                    let elemKey = nodeName.split("(")[0].toLowerCase();
+                                    if (serie.name.toLowerCase() == elemKey) {
+                                        let allSeriesDataElems = "";
+                                        serie.data.forEach(dataElem => {
+                                            allSeriesDataElems += dataElem[3]+ "("+dataElem[0] +","+ dataElem[1] +","+ dataElem[2] + ")" + ", ";
+                                        });
+                                        scriptBubbleChart = scriptBubbleChart + str.replace("[Data Elements]", allSeriesDataElems) + ". ";
+                                    }
+                                    if (serie.name.toLowerCase() != elemKey) {
+                                        let allSeriesDataElems = "";
+                                        serie.data.forEach(dataElem => {
+                                            if (dataElem[3].toLowerCase() == elemKey) {
+                                                allSeriesDataElems += dataElem[3]+ "("+dataElem[0] +","+ dataElem[1] +","+ dataElem[2] + ")" + ", ";
+                                                scriptBubbleChart = scriptBubbleChart + str.replace("[Data Elements]", allSeriesDataElems) + ". ";
+                                            }
+                                        });
+                                    }
+                                })
+                            }
+
+                        }
+                    });
+                }
+
+                defaultStoryTimeline[3].contents.push({
+                    type: "Data-Element",
+                    timeNode: timelineYears[0],
+                    dataNode: dataItem.key+"("+dataItem.colorName+")",
+                    script: scriptBubbleChart
+                });
+            }
             });
             page.storyTimeline = defaultStoryTimeline;
             initViewStoryTimeline = handleViewOfStoryTimeline(page.storyTimeline);
@@ -357,11 +388,46 @@ function SinglePageTimeline({ page, onDataChange, ...props }) {
 
     const handleAddDataELementNode = (e) => {
         const dataElementContents = storyTimelineData[3].contents;
+        
+        let scriptBubbleChart = "";
+
+        if (pageData && pageData.options) {
+            pageData.options.forEach(option => {
+                let str = getRandomElement(scriptTemplateOfBubbleChart);
+                if (option.title && option.title.text == String(selectDataElementYear)) {
+                    str = str.replace("[Year]", option.title.text);
+                    if(option.series) {
+                        option.series.forEach(serie => {
+                            let elemKey = selectDataElementNode.split("(")[0].toLowerCase();
+                            if (serie.name.toLowerCase() == elemKey) {
+                                let allSeriesDataElems = "";
+                                serie.data.forEach(dataElem => {
+                                    allSeriesDataElems += dataElem[3]+ "("+dataElem[0] +","+ dataElem[1] +","+ dataElem[2] + ")" + ", ";
+                                });
+                                scriptBubbleChart = scriptBubbleChart + str.replace("[Data Elements]", allSeriesDataElems) + ". ";
+                            }
+                            if (serie.name.toLowerCase() != elemKey) {
+                                let allSeriesDataElems = "";
+                                serie.data.forEach(dataElem => {
+                                    if (dataElem[3].toLowerCase() == elemKey) {
+                                        allSeriesDataElems += dataElem[3]+ "("+dataElem[0] +","+ dataElem[1] +","+ dataElem[2] + ")" + ", ";
+                                        scriptBubbleChart = scriptBubbleChart + str.replace("[Data Elements]", allSeriesDataElems) + ". ";
+                                    }
+                                });
+                            }
+                        })
+                    }
+
+                }
+            });
+        }
+
+
         dataElementContents.push({
             type: "Data-Element",
             timeNode: selectDataElementYear,
             dataNode: selectDataElementNode,
-            script: getRandomElement(scriptTemplate.dataElements)
+            script: scriptBubbleChart
         });
         setStoryTimelineData(storyTimelineData);
         setViewStoryTimeline(handleViewOfStoryTimeline(storyTimelineData));
@@ -547,7 +613,7 @@ function SinglePageTimeline({ page, onDataChange, ...props }) {
                     {
                         viewStoryTimeline.map((content, index) => {
                             return (
-                                <Tab eventKey={content.timeNode} title={content.timeNode} key={index}>
+                                <Tab eventKey={content.timeNode+ String(index)} title={content.timeNode} key={index}>
                                     <Form>
                                         <Form.Control as="textarea" rows={5} value={content.script} onChange={(e) => handleStoryScript(e, content.timeNode, index)}/>
                                     </Form>

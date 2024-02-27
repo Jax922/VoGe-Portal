@@ -1,6 +1,9 @@
 import React, { useState, useEffect} from "react";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Button from 'react-bootstrap/Button';
+import { Popover } from 'antd';
 
 function BubbleChartSettings({ page, onDataChange, ...props }) {
 
@@ -289,13 +292,13 @@ function BubbleChartSettings({ page, onDataChange, ...props }) {
 
     const [NLUMode, setNLUMode] = useState(parsedData.customOption && parsedData.customOption.NLUMode ? parsedData.customOption.NLUMode : "hybrid");
 
-    const handleNLUModeChange = (e) => {
-        setNLUMode(e.target.value);
+    const handleNLUModeChange = (mode) => {
+        setNLUMode(mode);
         let parsedData = JSON.parse(page.data);
         if(parsedData.customOption) {
-            parsedData.customOption.NLUMode = e.target.value;
+            parsedData.customOption.NLUMode = mode;
         } else {
-            parsedData.customOption = {NLUMode: e.target.value};
+            parsedData.customOption = {NLUMode: mode};
         }
         onDataChange(JSON.stringify(parsedData, null, 2));
     }
@@ -525,12 +528,26 @@ function BubbleChartSettings({ page, onDataChange, ...props }) {
         onDataChange(JSON.stringify(parsedData, null, 2));
     }
 
+    const content = (
+        <div>
+          <p className="nluModeExplanation">
+                {/* <strong>Deep Learning Model + Keyword Matching:</strong> This mode combines the power of deep learning models with keyword matching to provide high accuracy and flexibility in understanding natural language. <font color="red">
+                    We recommend this mode for most use cases, because we train our NLU model with a wide range of natural language from data visualization presentation domain.
+                </font><br />
+                <strong>Keyword Matching Only:</strong> This mode relies solely on keyword matching to interpret user voice. It's faster and simpler but may not handle complex queries as effectively. */}
+                <strong>Model + Rule:</strong> Combines deep learning and keyword matching for accurate, flexible natural language understanding. Ideal for most scenarios, leveraging extensive training in data visualization.
+                <br />
+                <strong>Rule Only:</strong> Uses only keyword matching for quick, simple voice interpretation, but less effective for complex queries.
+            </p>
+        </div>
+      );
+
     return (
         <>
             <p>
                 <strong>Choose NLU Mode</strong>
             </p>
-            <InputGroup className="mb-3">
+            {/* <InputGroup className="mb-3">
                     <InputGroup.Text id="inputGroup-sizing-default">
                     NLU Mode
                     </InputGroup.Text>
@@ -538,13 +555,20 @@ function BubbleChartSettings({ page, onDataChange, ...props }) {
                         <option value="hybrid">Deep Learning Model + Keyword Matching</option>
                         <option value="keyword">Keyword Matching Only</option>
                     </Form.Select>
-            </InputGroup>
-            <p className="nluModeExplanation">
-                <strong>Deep Learning Model + Keyword Matching:</strong> This mode combines the power of deep learning models with keyword matching to provide high accuracy and flexibility in understanding natural language. <font color="red">
-                    We recommend this mode for most use cases, because we train our NLU model with a wide range of natural language from data visualization presentation domain.
-                </font><br />
-                <strong>Keyword Matching Only:</strong> This mode relies solely on keyword matching to interpret user voice. It's faster and simpler but may not handle complex queries as effectively.
-            </p>
+            </InputGroup> */}
+            <ButtonGroup aria-label="Basic example">
+                <Button onClick={()=>{handleNLUModeChange("hybrid")}} variant={NLUMode == "hybrid" ? "primary": "secondary"}>Model + Rule</Button>
+                <Button onClick={()=>{handleNLUModeChange("keyword")}} variant={NLUMode == "keyword" ? "primary": "secondary"}>Rule Only</Button>
+            </ButtonGroup>
+            <Popover content={content} title="Understanding NLU Modes">
+                <span>
+                    <i class="bi bi-lightbulb-fill" style={{
+                        color: "#FFD700",
+                        marginLeft: "5px"
+                    }}></i>
+                </span>
+            </Popover>
+            
 
             <hr style={{
                 borderTop: "3px dotted #bbb"

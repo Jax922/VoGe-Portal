@@ -54,7 +54,7 @@ const CodeDisplay = ({code, onDataChange, ...props}) => {
 
     return (
         <div>
-            <div style={{marginBottom: '10px', textAlign: 'left'}}>
+            <div style={{marginBottom: '10px', textAlign: 'right'}}>
                 {
                     alertShow &&
                     <span style={{color: 'red'}}>
@@ -99,7 +99,7 @@ const CodeDisplay = ({code, onDataChange, ...props}) => {
             {   
                 alertShow && alertText !== "" &&
                 <Alert
-                    style={{position: 'fixed', bottom: 0, right: 10, width: '30%', zIndex: 1000}}
+                    style={{position: 'fixed', bottom: "40%", right: "40%", width: '30%', zIndex: 1000}}
                     message="Data Error:"
                     description = {alertText}
                     type="error"

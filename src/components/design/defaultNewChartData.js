@@ -6,7 +6,8 @@ const defaultBarChartData = {
     "mode": "immediate",
     "yAxis": true,
     "xAxis": true,
-    "theme": "light"
+    "theme": "light",
+    "chartType": "bar"
   },
   "title": {
     "show": true,
@@ -136,19 +137,28 @@ const defaultLineChartData = {
     "mode": "immediate",
     "yAxis": true,
     "xAxis": true,
-    "theme": "light"
+    "theme": "light",
+    "chartType": "line",
+    "lineMode": "more"
   },
   "title": {
-    "show": false,
+    "show": true,
     "textStyle": {
-      "color": "rgba(51,51,51,0.5)"
-    }
+      "color": "rgba(51,51,51,0.5)",
+      "fontSize": "24"
+    },
+    "text": "Line Chart Title",
+    "left": "center"
   },
   "tooltip": {
     "trigger": "axis",
     "axisPointer": {
       "type": "none"
     }
+  },
+  "legend": {
+    "right": -50,
+    "top": 50
   },
   "toolbox": {},
   "xAxis": {
@@ -181,7 +191,8 @@ const defaultLineChartData = {
       "fontWeight": "bolder",
       "show": true
     },
-    "name": "Time"
+    "name": "Time",
+    "boundaryGap": false
   },
   "yAxis": {
     "splitLine": {

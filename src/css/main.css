@@ -154,8 +154,9 @@ body {
 
 .example-header {
   
-  background: linear-gradient(to right, #cfd9df, #e2ebf0, #ffecd2, #fcb69f);
-  color: #333;
+  /* background: linear-gradient(to right, #cfd9df, #e2ebf0, #ffecd2, #fcb69f); */
+  background: #2576D2;
+  color: #fff;
   text-align: center;
   padding: 1em 0;
   font-weight: bolder;
@@ -167,10 +168,12 @@ body {
 }
 
 .example-chart-container {
+  margin: 20px auto;
+  width: 80%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
   gap: 20px;
-  padding: 20px;
+  /* padding: 20px; */
 }
 
 .example-examplechart {
@@ -394,6 +397,7 @@ body {
 }
 
 .nluModeExplanation {
+  width: 250px;
   margin-top: 10px;
   padding: 10px;
   background-color: #f9f9f9;

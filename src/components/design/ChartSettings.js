@@ -1,9 +1,26 @@
 import { init } from "echarts";
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect, useRef} from "react";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Button from 'react-bootstrap/Button';
 import theme from "./theme";
-import { update } from "lodash";
+import { set, update } from "lodash";
+import { Popover } from 'antd';
+
+const content = (
+    <div>
+      <p className="nluModeExplanation">
+            {/* <strong>Deep Learning Model + Keyword Matching:</strong> This mode combines the power of deep learning models with keyword matching to provide high accuracy and flexibility in understanding natural language. <font color="red">
+                We recommend this mode for most use cases, because we train our NLU model with a wide range of natural language from data visualization presentation domain.
+            </font><br />
+            <strong>Keyword Matching Only:</strong> This mode relies solely on keyword matching to interpret user voice. It's faster and simpler but may not handle complex queries as effectively. */}
+            <strong>Mutilple Lines Mode:</strong> By simply stating an x-axis tick, you can view data points for all available lines on the chart. Ideal for comparing trends across different datasets at a glance.
+            <br />
+            <strong>Single Line Mode:</strong> Mention both an x-axis tick and the specific line's legend name to display data points for that selected line only. When you need to dive deeper into a particular dataset, this mode allows for focused analysis.
+        </p>
+    </div>
+  );
 
 function hiddleAxis(name, data, show) {
 
@@ -125,7 +142,7 @@ function ChartSettings({ page, onDataChange, ...props }) {
     // const [renderingModeSelected, setRenderingModeSelected] = useState(props.renderingMode);
     console.log("page settings: ", page);
     const [dataString, setDataString] = useState(page.data)
-    const parsedData = page&&page.data ? JSON.parse(page.data) : {};
+    const parsedData = page && page.data ? JSON.parse(page.data) : {};
 
     let initChartTheme = "custom";
     if (parsedData && parsedData.customOption && parsedData.customOption.mode) {
@@ -174,10 +191,14 @@ function ChartSettings({ page, onDataChange, ...props }) {
     }
 
     let initRenderingMode = 'immediate';
+    let initShowingMode = 'more';
     let initXAxisShow = true;
     let initYAxisShow = true;
     if (page && page.data && parsedData.customOption.mode) {
         initRenderingMode = parsedData.customOption.mode;
+    }
+    if (page && page.data && parsedData.customOption.lineMode) {
+        initShowingMode = parsedData.customOption.lineMode;
     }
     if (page && page.data) { 
         initXAxisShow = parsedData.customOption.xAxis;
@@ -187,6 +208,11 @@ function ChartSettings({ page, onDataChange, ...props }) {
     let initYAxisObj = {};
     let initHighlightObjs = [];
     let initTitleObj = {};
+
+    let initLineShowingMode = "more";
+    if (page && page.customOption && page.customOption.lineMode) {
+        initLineShowingMode = page.customOption.lineMode;
+    }
     
     if (page && page.data && parsedData.xAxis) {
         initXAxisObj["lineWidth"] = parsedData.xAxis.axisLine.lineStyle.width;
@@ -279,8 +305,10 @@ function ChartSettings({ page, onDataChange, ...props }) {
         }
 
     }
-
+    
+    const [forceUpdateKey, setForceUpdateKey] = useState(0);
     const [renderingMode, setRenderingMode] = useState(initRenderingMode)
+    const [showingMode, setShowingMode] = useState(initShowingMode)
     const [xAxisShow, setXAxisShow] = useState(initXAxisShow)
     const [xAxisLineType, setXAxisLineType] = useState(initXAxisObj.lineType)
     const [xAxisLineWidth, setXAxisLineWidth] = useState(initXAxisObj.lineWidth)
@@ -321,6 +349,8 @@ function ChartSettings({ page, onDataChange, ...props }) {
 
     const [chartTheme, setChartTheme] = useState(initChartTheme)
 
+    const singlelineModebuttonRef = useRef(null);
+
     const handleChartThemeChange = (e) => {
         setChartTheme(e.target.value);
         let parsedData = JSON.parse(page.data);
@@ -355,6 +385,13 @@ function ChartSettings({ page, onDataChange, ...props }) {
         setRenderingMode(e.target.value);
         const parsedData = JSON.parse(page.data);
         parsedData.customOption.mode = e.target.value;
+        onDataChange(JSON.stringify(parsedData, null, 2));
+    }
+
+    const handleLineShowingModeChange = (v) => {
+        setShowingMode(v);
+        let parsedData = JSON.parse(page.data);
+        parsedData.customOption.lineMode = v;
         onDataChange(JSON.stringify(parsedData, null, 2));
     }
 
@@ -803,10 +840,15 @@ function ChartSettings({ page, onDataChange, ...props }) {
         onDataChange(JSON.stringify(parsedData, null, 2));
     }
 
+    
+
     useEffect(() => {
         console.log("x-axis settings state effect: ", xAxisShow);
-        // 这里可以放置基于 xAxisShow 更新的逻辑
     }, [xAxisShow]);
+
+    useEffect(() => {
+        console.log("Line Chart Showing Mode: ", showingMode);
+      }, [showingMode]);
 
     return (
         <>
@@ -819,8 +861,45 @@ function ChartSettings({ page, onDataChange, ...props }) {
                         <option value="immediate">immediate</option>
                         <option value="progressive">progressive</option>
                     </Form.Select>
-                </Form.Group>
+                </Form.Group>  
             </Form>
+            {/* <Form>
+                <Form.Group  className="mb-3">
+                    <Form.Label>
+                        <strong>Line Showing Mode</strong>
+                        <Popover content={content} title="Understanding Line Showing Modes">
+                            <span>
+                                <i class="bi bi-lightbulb-fill" style={{
+                                    color: "#FFD700",
+                                    marginLeft: "5px"
+                                }}></i>
+                            </span>
+                        </Popover>
+                    </Form.Label>
+                    <Form.Select onChange={handleLineShowingModeChange} value={lineShowingMode}>
+                        <option value="multilines">multiplelines</option>
+                        <option value="singleline">singleline</option>
+                    </Form.Select>
+                </Form.Group>
+            </Form> */}
+             <p>
+                <strong>Choose Line Showing Mode</strong>
+            </p>
+            <ButtonGroup key={new Date().getTime()} aria-label="Basic example">
+                <Button ref={singlelineModebuttonRef} onClick={()=>{handleLineShowingModeChange("one")}} variant={showingMode == "one" ? "primary": "secondary"}>single line</Button>
+                <Button onClick={()=>{handleLineShowingModeChange("more")}} variant={showingMode == "more" ? "primary": "secondary"}>multiple lines</Button>
+            </ButtonGroup>
+            <Popover content={content} title="Understanding Line Showing Modes">
+                <span>
+                    <i class="bi bi-lightbulb-fill" style={{
+                        color: "#FFD700",
+                        marginLeft: "5px"
+                    }}></i>
+                </span>
+            </Popover>  
+
+            
+
             <hr style={{
                 borderTop: "3px dotted #bbb"
             }}/>
@@ -840,6 +919,7 @@ function ChartSettings({ page, onDataChange, ...props }) {
                         <option value="walden">Walden(light)</option>
                         <option value="purple">Purple(dark)</option>
                     </Form.Select>
+                    
             </InputGroup>
             <hr style={{
                 borderTop: "3px dotted #bbb"
