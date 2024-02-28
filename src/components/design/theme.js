@@ -11,11 +11,11 @@ const dark = {
         "#d2f5a6",
         "#76f2f2",
     ],
-    "title": "rgba(51,51,51,0.5)",
-    "xAxisLabel": 'rgba(51,51,51,0.5)',
-    "xAxisLine":"rgba(51,51,51,0.5)",
-    "yAxisLabel": 'rgba(51,51,51,0.5)',
-    "yAxisLine":"rgba(51,51,51,0.5)",
+    "title": "rgba(255,255,255,0.7)",
+    "xAxisLabel": 'rgba(255,255,255,0.7)',
+    "xAxisLine":"rgba(255,255,255,0.7)",
+    "yAxisLabel": 'rgba(255,255,255,0.7)',
+    "yAxisLine":"rgba(255,255,255,0.7)",
     "markLabel": "#293441",
     "emphasisBorderColor": "#eeeeee"
 }
@@ -53,7 +53,7 @@ const westeros = {
         "#a5e7f0",
         "#cbb0e3"
     ],
-    "title": "#516b91",
+    "title": "rgba(51,51,51,0.5)",
     "xAxisLabel": 'rgba(51,51,51,0.5)',
     "xAxisLine":"rgba(51,51,51,0.5)",
     "yAxisLabel": 'rgba(51,51,51,0.5)',

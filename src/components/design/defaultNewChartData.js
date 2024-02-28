@@ -99,12 +99,12 @@ const defaultBarChartData = {
         "position": "top",
         "fontSize": "24",
         "fontWeight": "bold",
-        "color": "#333333"
+        "color": "rgba(51,51,51,0.7)"
       },
       "smooth": true,
       "areaStyle": {},
       "itemStyle": {
-        "opacity": 0.5,
+        "opacity": 0.7,
         "color": "#005eaa"
       },
       "emphasis": {
@@ -241,7 +241,7 @@ const defaultLineChartData = {
       "areaStyle": {},
       "itemStyle": {
         "color": "#005eaa",
-        "opacity": 0.5
+        "opacity": 0.7
       },
       "lineStyle": {
         "width": 3
@@ -281,7 +281,7 @@ const defaultLineChartData = {
       "areaStyle": {},
       "itemStyle": {
         "color": "#c12e34",
-        "opacity": 0.5
+        "opacity": 0.7
       },
       "lineStyle": {
         "width": 3

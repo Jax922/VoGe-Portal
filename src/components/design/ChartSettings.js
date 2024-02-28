@@ -356,7 +356,27 @@ function ChartSettings({ page, onDataChange, ...props }) {
         let parsedData = JSON.parse(page.data);
         parsedData.customOption.theme = e.target.value;
         if (e.target.value === "dark") {
+            // parsedData.series[i].label.color
+            if (parsedData && parsedData.series) {
+                for (let i = 0; i < parsedData.series.length; i++) {
+                    if (parsedData.series[i].label) {
+                        parsedData.series[i].label.color = "rgba(255,255,255,1.0)";
+                    } else {
+                        parsedData.series[i].label = {color: "rgba(255,255,255,1.0)"};
+                    }
+                }
+            }
             updateThemeColor(parsedData, theme.dark);
+        } else {
+            if (parsedData && parsedData.series) {
+                for (let i = 0; i < parsedData.series.length; i++) {
+                    if (parsedData.series[i].label) {
+                        parsedData.series[i].label.color = "rgba(51,51,51,0.7)";
+                    } else {
+                        parsedData.series[i].label = {color: "rgba(51,51,51,0.7)"};
+                    }
+                }
+            }
         }
         if (e.target.value === "light"){
             updateThemeColor(parsedData, theme.light);
@@ -882,7 +902,8 @@ function ChartSettings({ page, onDataChange, ...props }) {
                     </Form.Select>
                 </Form.Group>
             </Form> */}
-             <p>
+            {
+                page && page.type === "line" && (<><p>
                 <strong>Choose Line Showing Mode</strong>
             </p>
             <ButtonGroup key={new Date().getTime()} aria-label="Basic example">
@@ -896,7 +917,8 @@ function ChartSettings({ page, onDataChange, ...props }) {
                         marginLeft: "5px"
                     }}></i>
                 </span>
-            </Popover>  
+            </Popover></>)
+            }
 
             
 

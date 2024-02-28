@@ -33,10 +33,14 @@ function calculateBubbleSize(minValue, maxValue, minSize, maxSize) {
 class MyChart2 extends React.Component {
   constructor(props) {
     super(props);
+    
     this.state = {
+      theme: 'light' || props.data.customOption.theme,
       data: props.data,
       container: props.container || 'main-chart',
     };
+
+  
 
   }
 
@@ -83,12 +87,21 @@ class MyChart2 extends React.Component {
         }
       }
     }
+
+
     myChart.setOption(data);
+
+
   }
+
+  
+
+
+  
 
   render() {
     return (
-      <div id={this.state.container} style={{width: '100%', height: '70vh'}}>
+      <div id={this.state.container} style={{width: '100%', height: '70vh', background: this.state.data.customOption.theme == 'dark' ? '#333' : '#fff'}} >
 
       </div>
     );
