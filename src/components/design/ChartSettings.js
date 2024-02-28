@@ -366,6 +366,20 @@ function ChartSettings({ page, onDataChange, ...props }) {
                     }
                 }
             }
+            if (parsedData && parsedData.xAxis) {
+                if (parsedData.xAxis.nameTextStyle) {
+                    parsedData.xAxis.nameTextStyle.color = "rgba(255,255,255,0.7)";
+                } else {
+                    parsedData.xAxis.nameTextStyle = {color: "rgba(255,255,255,0.7)"};
+                }
+            }
+            if (parsedData && parsedData.yAxis) {
+                if (parsedData.yAxis.nameTextStyle) {
+                    parsedData.yAxis.nameTextStyle.color = "rgba(255,255,255,0.7)";
+                } else {
+                    parsedData.yAxis.nameTextStyle = {color: "rgba(255,255,255,0.7)"};
+                }
+            }
             updateThemeColor(parsedData, theme.dark);
         } else {
             if (parsedData && parsedData.series) {
@@ -375,6 +389,20 @@ function ChartSettings({ page, onDataChange, ...props }) {
                     } else {
                         parsedData.series[i].label = {color: "rgba(51,51,51,0.7)"};
                     }
+                }
+            }
+            if (parsedData && parsedData.xAxis) {
+                if (parsedData.xAxis.nameTextStyle) {
+                    parsedData.xAxis.nameTextStyle.color = "rgba(51,51,51,0.5)";
+                } else {
+                    parsedData.xAxis.nameTextStyle = {color: "rgba(51,51,51,0.5)"};
+                }
+            }
+            if (parsedData && parsedData.yAxis) {
+                if (parsedData.yAxis.nameTextStyle) {
+                    parsedData.yAxis.nameTextStyle.color = "rgba(51,51,51,0.5)";
+                } else {
+                    parsedData.yAxis.nameTextStyle = {color: "rgba(51,51,51,0.5)"};
                 }
             }
         }
