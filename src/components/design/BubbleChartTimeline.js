@@ -6,7 +6,6 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Button from 'react-bootstrap/Button';
 import scriptTemplate from "./scriptTemplate";
-import { data } from "@tensorflow/tfjs";
 
 const dataGroupColors = [
     "blue",
