@@ -13,6 +13,12 @@ export default function SlideCard({ slide, ...props }) {
 
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    let dataOption = {}
+    if (slide && slide.data) {
+        dataOption = JSON.parse(slide.data);
+    }
+
+    console.log("slide", slide);
 
     function openModal(e) {
         e.stopPropagation();
@@ -54,13 +60,18 @@ export default function SlideCard({ slide, ...props }) {
             hoverable
             style={{
                 width: 240,
-                padding: 0,
+                padding: '5px',
             }}
             cover={ 
-                coverImg === "/empty_slides.jpeg" ? <img alt="" src={coverImg} /> : 
+                coverImg === "/empty_slides.jpeg" ? <img style={{
+                    width: 230,
+                    height: 135,
+                }} alt="" src={coverImg} /> : 
                 <img style={{
-                    width: 240,
+                    width: 230,
+                    height: 135,
                 }} src={`data:image/svg+xml;utf8,${encodeURIComponent(coverImg)}`}/>
+                
             }
             actions={[
                 <DeleteOutlined key="delete" className='icon-hover' onClick={openModal}/>,

@@ -252,6 +252,7 @@ function SinglePageTimeline({ page, onDataChange, ...props }) {
         dataElementContents.push({
             type: "Data-Element",
             timeNode: selectDataElementNode,
+            valueNode: specificValue,
             script: allScriptStr
         });
         setStoryTimelineData(storyTimelineData);

@@ -15,10 +15,15 @@ export default function chart2svg(options, width, height) {
     // options.title = null
 
     // console.log("options", options);
-      
+    
+    if (options && options.customOption && options.customOption.theme === 'dark') {
+        options.backgroundColor = '#333333';
+    }
+
     chart.setOption(options);
       
     const svgStr = chart.renderToSVGString();
+    // const svgStr = chart.getDataURL();
 
     // console.log(svgStr);
 

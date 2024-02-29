@@ -133,12 +133,12 @@ export default function Dashboard() {
                                 My Display
                             </div>
                             {/* https://stackoverflow.com/questions/11401897/get-the-current-domain-name-with-javascript-not-the-path-etc */}
-                            <CopyToClipboardButton
+                            {/* <CopyToClipboardButton
                                 className="m-3 p-4 bd-highlight fs-4"
                                 textToBeCopied={`http://localhost:3001/?model=selfie_segmentation&${displayLink}`}
                                 defaultText={"Copy Link"}
                                 onSuccessText={"Link Copied"}
-                            />
+                            /> */}
                             {/* open the display in new browser tab */}
                             <Form.Select onChange={handleDisplaySelect} style={{width: '300px'}} className="m-3 p-4 bd-highlight fs-4" aria-label="Default select example">
                                 {

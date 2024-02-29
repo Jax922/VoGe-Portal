@@ -15,9 +15,9 @@ const content = (
                 We recommend this mode for most use cases, because we train our NLU model with a wide range of natural language from data visualization presentation domain.
             </font><br />
             <strong>Keyword Matching Only:</strong> This mode relies solely on keyword matching to interpret user voice. It's faster and simpler but may not handle complex queries as effectively. */}
-            <strong>Mutilple Lines Mode:</strong> By simply stating an x-axis tick, you can view data points for all available lines on the chart. Ideal for comparing trends across different datasets at a glance.
+            <strong>Line by Line:</strong> Mention both an x-axis tick and the specific line's legend name to display data points for that selected line only. When you need to dive deeper into a particular dataset, this mode allows for focused analysis.
             <br />
-            <strong>Single Line Mode:</strong> Mention both an x-axis tick and the specific line's legend name to display data points for that selected line only. When you need to dive deeper into a particular dataset, this mode allows for focused analysis.
+            <strong>All-at-Once:</strong> By simply stating an x-axis tick, you can view data points for all available lines on the chart. Ideal for comparing trends across different datasets at a glance.
         </p>
     </div>
   );
@@ -279,6 +279,7 @@ function ChartSettings({ page, onDataChange, ...props }) {
 
             initHighlightObj["chartType"] = parsedData.series[i].type;
             initHighlightObj["area"] = parsedData.series[i].areaStyle ? true : false ;
+            initHighlightObj["stack"] = parsedData.series[i].stack ? true : false;
             
             if (parsedData.series[i].label) {
                 initHighlightObj["labelShow"] = parsedData.series[i].label.show || false;
@@ -649,6 +650,19 @@ function ChartSettings({ page, onDataChange, ...props }) {
         onDataChange(JSON.stringify(parsedData, null, 2));
     }
 
+    const handleHightlightStackedChange = (e, idx) => {
+        let newHighlightObjs = [...highlightObjs];
+        newHighlightObjs[idx]["stack"] = e.target.checked;
+        setHighlightObjs(newHighlightObjs);
+        let parsedData = JSON.parse(page.data);
+        if (e.target.checked) {
+            parsedData.series[idx].stack = "Total";
+        } else {
+            delete parsedData.series[idx].stack;
+        }
+        onDataChange(JSON.stringify(parsedData, null, 2));
+    }
+
     const handleHightlightAreaChange = (e, idx) => {
         let newHighlightObjs = [...highlightObjs];
         newHighlightObjs[idx]["area"] = e.target.checked;
@@ -935,8 +949,8 @@ function ChartSettings({ page, onDataChange, ...props }) {
                 <strong>Choose Line Showing Mode</strong>
             </p>
             <ButtonGroup key={new Date().getTime()} aria-label="Basic example">
-                <Button ref={singlelineModebuttonRef} onClick={()=>{handleLineShowingModeChange("one")}} variant={showingMode == "one" ? "primary": "secondary"}>single line</Button>
-                <Button onClick={()=>{handleLineShowingModeChange("more")}} variant={showingMode == "more" ? "primary": "secondary"}>multiple lines</Button>
+                <Button ref={singlelineModebuttonRef} onClick={()=>{handleLineShowingModeChange("one")}} variant={showingMode == "one" ? "primary": "secondary"}>Line by Line</Button>
+                <Button onClick={()=>{handleLineShowingModeChange("more")}} variant={showingMode == "more" ? "primary": "secondary"}>All-at-Once</Button>
             </ButtonGroup>
             <Popover content={content} title="Understanding Line Showing Modes">
                 <span>
@@ -1360,6 +1374,22 @@ function ChartSettings({ page, onDataChange, ...props }) {
                                     <InputGroup className="mb-3">
                                         <InputGroup.Text id="inputGroup-sizing-default">
                                         Stacked
+                                        </InputGroup.Text>
+                                        <Form.Check // prettier-ignore
+                                            onChange={e => handleHightlightStackedChange(e, i)}
+                                            style={{ float: "right", display: "flex",
+                                            alignItems: "center", marginLeft: "15px" }}
+                                            type="switch"
+                                            id="switch"
+                                            label=""
+                                            checked={highlightObj["stack"]}
+                                        >
+                                        </Form.Check>
+                                    </InputGroup>
+
+                                    <InputGroup className="mb-3">
+                                        <InputGroup.Text id="inputGroup-sizing-default">
+                                        Area
                                         </InputGroup.Text>
                                         <Form.Check // prettier-ignore
                                             onChange={e => handleHightlightAreaChange(e, i)}

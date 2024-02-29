@@ -157,7 +157,7 @@ const defaultLineChartData = {
     }
   },
   "legend": {
-    "right": -50,
+    "right": 20,
     "top": 50
   },
   "toolbox": {},

@@ -9,9 +9,9 @@ export default function PageCard({ page, handleClick, handleDelPage, ...props })
     const nonActiveStyle = {
         height: 82 * 1.1,
         width: 146 * 1.1,
-        padding: 0,
         borderRadius: 10,
         position: 'relative',
+        padding: '0px',
     }
 
     

@@ -309,7 +309,11 @@ export default function ChartDesign() {
         }
 
         activePage.type = data;
-        activePage.img = chart2svg(activePage.data, 600, 400);
+        let dataOption = activePage.data;
+        if (activePage.data.options) {
+            dataOption.option = activePage.data.options[0];
+        }
+        activePage.img = chart2svg(dataOption, 1280, 720);
         activePage.storyTimeline = [];
         setActivePage(activePage);
         setSelectedType(data);

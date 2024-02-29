@@ -11,15 +11,15 @@ const warmups = [
 ]
 
 const endings = [
-    "And that, my friends, was the rollercoaster ride through [Insert Data Topic]. I hope it was more enlightening than confusing – but hey, that's data visualization for you! Remember, a graph is worth a thousand numbers.",
+    // "And that, my friends, was the rollercoaster ride through [Insert Data Topic]. I hope it was more enlightening than confusing – but hey, that's data visualization for you! Remember, a graph is worth a thousand numbers.",
 
-    "In conclusion, our detailed examination of [Insert Data Topic] through data visualization has provided us with valuable insights. The knowledge we have gathered today is crucial for [Insert Application or Importance of the Data]. Thank you for your attentive participation.",
+    "[In conclusion], our detailed examination of [Insert Data Topic] through data visualization has provided us with valuable insights. The knowledge we have gathered today is crucial for [Insert Application or Importance of the Data]. Thank you for your attentive participation.",
 
-    "As we conclude, it’s clear that the study of [Insert Data Topic] through data visualization is not only enlightening but also essential in the field of [Insert Relevant Field or Study]. The implications of our findings are vast and warrant further scholarly exploration.",
+    "[As we conclude], it’s clear that the study of [Insert Data Topic] through data visualization is not only enlightening but also essential in the field of [Insert Relevant Field or Study]. The implications of our findings are vast and warrant further scholarly exploration.",
 
-    "As we come to the end, remember that each data point in [Insert Data Topic] represents more than just a number – it’s a beacon guiding us towards informed decisions and better futures. Let's carry these insights forward.",
+    "[As we come to the end], remember that each data point in [Insert Data Topic] represents more than just a number – it’s a beacon guiding us towards informed decisions and better futures. Let's carry these insights forward.",
 
-    "And so, our data tale comes to a close. We navigated through the intricate world of [Insert Data Topic], uncovering stories hidden within charts and graphs. May these stories enlighten your path in [Insert Relevant Field or Application]."
+    // "And so, our data tale comes to a close. We navigated through the intricate world of [Insert Data Topic], uncovering stories hidden within charts and graphs. May these stories enlighten your path in [Insert Relevant Field or Application]."
 ]
 
 const XAxisLines = [
