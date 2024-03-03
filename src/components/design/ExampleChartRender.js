@@ -53,7 +53,7 @@ class MyChart2 extends React.Component {
 
   render() {
     return (
-      <div id={this.state.container} style={{width: '70vw', height: '95%'}}>
+      <div id={this.state.container} style={{width: '90%', height: '380px', paddingLeft: '60px', paddingTop: '20px'}}>
 
       </div>
     );

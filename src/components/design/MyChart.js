@@ -101,8 +101,10 @@ class MyChart2 extends React.Component {
 
   render() {
     return (
-      <div id={this.state.container} style={{width: '100%', height: '70vh', background: this.state.data.customOption.theme == 'dark' ? '#333' : '#fff'}} >
+      <div style={{ display: 'grid', placeItems: 'center', width: '100%', height: '70vh', background: this.state.data.customOption.theme == 'dark' ? '#333' : '#fff'}} >
+        <div id={this.state.container} style={{margin: "auto 0", width: '100%', height: '65vh',  background: this.state.data.customOption.theme == 'dark' ? '#333' : '#fff'}}>
 
+        </div>
       </div>
     );
   }

@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import {DeleteFilled} from '@ant-design/icons';
+import {DeleteFilled, DeleteOutlined} from '@ant-design/icons';
 import {Card, Row, Col, Button} from 'antd'
 
 export default function PageCard({ page, handleClick, handleDelPage, ...props }) {
@@ -12,13 +12,14 @@ export default function PageCard({ page, handleClick, handleDelPage, ...props })
         borderRadius: 10,
         position: 'relative',
         padding: '0px',
+        backgroundColor: 'white',
     }
 
     
 
     const activeStyle = {
         ...nonActiveStyle,
-        border: '3px solid blue',
+        border: '3px solid #F59F22',
     }
 
 
@@ -37,7 +38,7 @@ export default function PageCard({ page, handleClick, handleDelPage, ...props })
             onClick={() => {handleClick(page)}}
         >   
         <Row>
-                <Col flex={2} style={{textAlign: 'center'}}>
+                <Col flex={2} style={{textAlign: 'right', color: "#fff", marginRight: '-10px'}}>
                     <span>{page.index + 1}</span>
                 </Col>
                 <Col flex={8} style={{textAlign: 'center'}}>
@@ -55,10 +56,11 @@ export default function PageCard({ page, handleClick, handleDelPage, ...props })
                             page.active && <Button style={{
                                 display: 'inline-block',
                                 position: 'absolute',
-                                top: 0,
+                                bottom: 0,
                                 right: 0,
+                                background: 'none',
 
-                            }} type="primary" danger shape="circle" icon={<DeleteFilled />} onClick={handleDeletePage} />
+                            }} type="primary" shape="circle" icon={<DeleteOutlined />} onClick={handleDeletePage} />
                         }
                         {/* <div dangerouslySetInnerHTML={{ __html: page.img }} /> */}
                         {/* <img src={`data:image/svg+xml;utf8,${encodeURIComponent(page.img)}`} /> */}

@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState }from 'react';
 import { useLocation } from 'react-router-dom';
-import { PlaySquareOutlined, PlusOutlined, SearchOutlined, AreaChartOutlined, UploadOutlined, UserOutlined, VideoCameraOutlined, SaveOutlined } from '@ant-design/icons';
+import { PlaySquareOutlined, PlusOutlined, DeleteOutlined, SearchOutlined, AreaChartOutlined, UploadOutlined, UserOutlined, VideoCameraOutlined, SaveOutlined } from '@ant-design/icons';
 import {Avatar, Card, notification, Layout, Menu, theme, Col, Row, Button, Form, Select, Space, Divider, Alert, Collapse} from 'antd';
 import Accordion from 'react-bootstrap/Accordion';
 import { Link, useHistory} from "react-router-dom";
@@ -85,13 +85,13 @@ export default function ChartDesign() {
           label: 'Bar Chart',
           value: 'bar',
           desc: 'Bar Chart',
-          icon: './chartype/bar.png'
+          icon: './chartype/01.jpg'
         },
         {
             label: 'Line Chart',
             value: 'line',
             desc: 'Line Chart',
-            icon: './chartype/line.png'
+            icon: './chartype/02.jpg'
         },
         // {
         //     label: 'Pie Chart',
@@ -151,7 +151,7 @@ export default function ChartDesign() {
             label: 'Bubble Chart',
             value: 'timelinebubble',
             desc: 'Bubble Chart',
-            icon: './chartype/scatter.png'
+            icon: './chartype/03.jpg'
         },
     ]
 
@@ -516,7 +516,7 @@ export default function ChartDesign() {
                                         color: "inherit",
                                     }}
                                 >
-                                    <Button style={{marginRight: '10px'}} icon={<PlaySquareOutlined />}>
+                                    <Button type="primary" style={{marginRight: '10px'}} icon={<PlaySquareOutlined />}>
                                         Preview
                                     </Button>
                                 </a>
@@ -540,17 +540,18 @@ export default function ChartDesign() {
                     }}
                 >
                     <Layout>
-                        <Sider width={200} style={{paddingBottom: '100px', background: colorBgContainer, height: '85vh',
-                                    overflowY: 'auto'}}>
+                        <Sider width={200} style={{paddingBottom: '100px', borderRadius: '10px', background: "#80B2D6", overflowY: 'auto'}}>
                             {
                                 slide && slide.pages.map((page, index) => {
                                     return <PageCard key={index} page={page} handleClick={handlePageClick} handleDelPage={handleDelPage} />
                                 })
                             }
                             <Button
+                                ghost
                                 onClick={handleNewPage}
                                 style={{
                                     marginLeft: '20%',
+                                    // border: "1px solid #8E8E8E"
                                 }}
                                 icon={<PlusOutlined />}>
                                 New Page
@@ -558,13 +559,13 @@ export default function ChartDesign() {
                             
                         </Sider>
                         <Divider type='vertical' />
-                        <Layout style={{ padding: '0 24px 24px', background: colorBgContainer }}>
+                        <Layout style={{ padding: '0 24px 24px', background: "#F2E1CD", borderRadius: '10px'}}>
                             <Content
                                 style={{
                                     padding: 24,
                                     margin: 0,
                                     minHeight: '85vh',
-                                    background: colorBgContainer,
+                                    background: "#F2E1CD",
                                     position: 'relative',
                                 }}
                             >   
@@ -589,11 +590,11 @@ export default function ChartDesign() {
                             <Divider type='vertical' />
                             <Sider width={300}
                                 style={{
-                                    background: colorBgContainer,
+                                    background: "#F2E1CD",
                                     height: '85vh',
                                     overflowY: 'auto',
                                     marginLeft: '10px',
-                                    borderLeft: '1px solid #ccc',
+                                    // borderLeft: '1px solid #ccc',
                                     padding: 0,
                                 }}
                             >
@@ -607,10 +608,18 @@ export default function ChartDesign() {
                                 <Accordion defaultActiveKey="0">
       <Accordion.Item eventKey="0">
         <Accordion.Header>
-            <p style={{textAlign: 'center', fontSize: '16px', fontWeight: 'bold'}}><i style={{color: '#3399ff'}} class="bi bi-bar-chart-fill"></i> {"   "} Library</p>
+            {/* <p style={{textAlign: 'center',lineHeight: '20px',  fontSize: '20px', fontWeight: 'bold'}}><i style={{color: '#3399ff'}} class="bi bi-bar-chart-fill"></i> {"   "} Library</p>
+             */}
+            {/* <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}> */}
+                {/* <p style={{textAlign: 'center', fontSize: '20px', fontWeight: 'bold', lineHeight: '46px'}}> */}
+                    {/* <i class="bi bi-bar-chart-fill" style={{color: '#ff9933'}}></i>  */}
+                    <i className="bi icon" style={{content: "url('./icon/book.svg')"}}></i>
+                    <font style={{marginLeft: '5px'}}>Library</font>
+                {/* </p> */}
+            {/* </div> */}
         </Accordion.Header>
         <Accordion.Body>
-                                    <div style={{width: '200px', marginLeft: '40px'}}>
+                                    <div style={{width: '200px', marginLeft: '30px'}}>
                                         {
                                             chartTypeOptions.map((option) => {
                                                 return <Card
@@ -636,7 +645,11 @@ export default function ChartDesign() {
       </Accordion.Item>
       <Accordion.Item eventKey="1">
         <Accordion.Header>
-            <p style={{textAlign: 'center', fontSize: '16px', fontWeight: 'bold'}}><i style={{color: '#ff9933'}} class="bi bi-palette-fill"></i> {"   "} Setting</p>
+            {/* <p style={{textAlign: 'center', fontSize: '16px', fontWeight: 'bold'}}> */}
+            <i className="bi icon" style={{content: "url('./icon/setting.svg')"}}></i>
+                    <font style={{marginLeft: '5px'}}>Setting</font>
+                {/* <i style={{color: '#ff9933'}} class="bi bi-palette-fill"></i> {"   "}  */}
+            {/* </p> */}
         </Accordion.Header>
         <Accordion.Body>
             {
@@ -713,7 +726,6 @@ export default function ChartDesign() {
                                 </div>
                             </Sider>
                         </Layout>
-
                     </Layout>
                 </div>
                 </Content>

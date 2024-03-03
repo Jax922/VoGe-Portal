@@ -54,7 +54,7 @@ const CodeDisplay = ({code, onDataChange, ...props}) => {
 
     return (
         <div>
-            <div style={{marginBottom: '10px', textAlign: 'right'}}>
+            <div style={{marginBottom: '10px', textAlign: 'right', fontFamily: 'Helvetica !important'}}>
                 {
                     alertShow &&
                     <span style={{color: 'red'}}>

@@ -556,6 +556,7 @@ function BubbleChartSettings({ page, onDataChange, ...props }) {
                         <option value="keyword">Keyword Matching Only</option>
                     </Form.Select>
             </InputGroup> */}
+             <div style={{display: "flex", alignItems: "center"}}>
             <ButtonGroup aria-label="Basic example">
                 <Button onClick={()=>{handleNLUModeChange("hybrid")}} variant={NLUMode == "hybrid" ? "primary": "secondary"}>Model + Rule</Button>
                 <Button onClick={()=>{handleNLUModeChange("keyword")}} variant={NLUMode == "keyword" ? "primary": "secondary"}>Rule Only</Button>
@@ -568,7 +569,7 @@ function BubbleChartSettings({ page, onDataChange, ...props }) {
                     }}></i>
                 </span>
             </Popover>
-            
+            </div>
 
             <hr style={{
                 borderTop: "3px dotted #bbb"

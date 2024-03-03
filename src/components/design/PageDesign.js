@@ -68,7 +68,7 @@ export default function PageDesign({page, onDataChange, onTextEdit, ...props }) 
                 textAlign: 'top',
                 top: 50,
                 left: 30,
-                width: '95%',
+                width: '100%',
                 height: '80%',
             }}
         >   
@@ -81,17 +81,22 @@ export default function PageDesign({page, onDataChange, onTextEdit, ...props }) 
             >   
                 {
                     //  empty page
-                    page && !page.type && <div style={{textAlign: 'center', marginTop: '5%'}}>
-                        <img src="./empty_chart.png" alt="empty chart" style={{width: '50%'}}/>
+                    page && !page.type && <div style={{textAlign: 'center', marginTop: '20%'}}>
+                        <img src="./visualization.png" alt="empty chart" style={{width: '200px'}}/>
                         <h4 style={{
                             color: '#999999',
-                        }}>Please select a chart type from the Library on the right!</h4>
+                        }}>Please select a chart type from the Library on the right</h4>
                     </div>
                 }
                 {
                     page && page.type !== "" && 
                     <Tabs
                         defaultActiveKey={activeTab}
+                        tabBarStyle={{
+                            border: 'none',
+                            // borderBottom: '1px solid #8E8E8E',
+                            color: "#7F7F7F !important",
+                        }}
                         items={
                             tabs.map((tab, i) => {
                                 const Icon = tab.icon;

@@ -123,7 +123,9 @@ export default function Dashboard() {
         <div>
             <NavigationBar />
             <Container className="d-flex flex-column">
-                <Row className="p-3 mt-4 bg-light rounded-3">
+                <Row style={{
+                    background: "linear-gradient(135deg, #AFCCE5, #FACD88)",
+                }} className="p-3 mt-4 rounded-3">
                     <Col>
                         <Container
                             fluid
@@ -140,7 +142,11 @@ export default function Dashboard() {
                                 onSuccessText={"Link Copied"}
                             /> */}
                             {/* open the display in new browser tab */}
-                            <Form.Select onChange={handleDisplaySelect} style={{width: '300px'}} className="m-3 p-4 bd-highlight fs-4" aria-label="Default select example">
+                            <Form.Select style={{
+                                width: '300px',
+                                backgroundColor: "rgba(255, 255, 255, 0.6)",
+                                border: "none"
+                            }} onChange={handleDisplaySelect} className="m-3 p-4 bd-highlight fs-4" aria-label="Default select example">
                                 {
                                     slides.map((slide, idx) => {
                                         return (
@@ -150,7 +156,10 @@ export default function Dashboard() {
                                 }
                             </Form.Select>
 
-                            <Button variant="primary" className="m-3 p-4 bd-highlight fs-4">
+                            <Button style={{
+                                background: "#7DB2D7",
+                                border: "none"
+                            }} className="m-3 fs-4">
                                 <a
                                     href={`http://localhost:3001/?model=selfie_segmentation&${displayLink}`}
                                     target={"_blank"}
@@ -168,7 +177,10 @@ export default function Dashboard() {
                         </Container>
                     </Col>
                 </Row>
-                <Row className="p-3 mt-4 bg-light">
+                <Row style={{
+                    background: "rgba(245, 159, 34, 0.22)"
+                    
+                }} className="p-3 mt-4 rounded-3">
                         <Col>
                             <Container
                                 fluid
@@ -182,7 +194,10 @@ export default function Dashboard() {
                                     {" "}
                                     Create New Slides
                                 </Button> */}
-                                <Button variant="primary" onClick={handleModalShow} className="m-3 p-4 bd-highlight fs-4">
+                                <Button style={{
+                                background: "#7DB2D7",
+                                border: "none"
+                            }} variant="primary" onClick={handleModalShow} className="m-3 p-3 bd-highlight fs-4">
                                     <i className="bi bi-file-earmark-plus"></i>
                                     {" "}
                                     Create New Slides
@@ -192,7 +207,8 @@ export default function Dashboard() {
                     {
                         slides.length === 0 && emptyTip()
                     }
-                    <Row xs={1} md={5}>
+                    <Row xs={1} md={5}  style={{
+                }}>
                         {
                             slides.map((slide, idx) => {
                                 return (
@@ -293,7 +309,7 @@ export default function Dashboard() {
                 </Button>
                 </Modal.Footer>
             </Modal>
-            <Footer style={{ textAlign: 'center', marginTop: '120px' }}>Chart Design ©2024 Copyright</Footer>
+            <Footer style={{ textAlign: 'center', marginTop: '120px' }}>VoGe Present ©2024 Copyright</Footer>
         </div>
     );
 }

@@ -948,18 +948,21 @@ function ChartSettings({ page, onDataChange, ...props }) {
                 page && page.type === "line" && (<><p>
                 <strong>Choose Line Showing Mode</strong>
             </p>
+            <div style={{display: "flex", alignItems: "center"}}>
             <ButtonGroup key={new Date().getTime()} aria-label="Basic example">
                 <Button ref={singlelineModebuttonRef} onClick={()=>{handleLineShowingModeChange("one")}} variant={showingMode == "one" ? "primary": "secondary"}>Line by Line</Button>
                 <Button onClick={()=>{handleLineShowingModeChange("more")}} variant={showingMode == "more" ? "primary": "secondary"}>All-at-Once</Button>
             </ButtonGroup>
             <Popover content={content} title="Understanding Line Showing Modes">
-                <span>
+                <span style={{display: 'inline-block', lineHeight: '100%'}}>
                     <i class="bi bi-lightbulb-fill" style={{
                         color: "#FFD700",
-                        marginLeft: "5px"
+                        marginLeft: "5px",
                     }}></i>
                 </span>
-            </Popover></>)
+            </Popover>
+            </div>
+            </>)
             }
 
             

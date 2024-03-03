@@ -296,7 +296,8 @@ function DataUpload({code, type, onDataChange, ...props}) {
         <div style={{
             width: '100%',
             height: '70vh',
-            border: '1px solid #ccc',
+            // border: '1px solid #ccc',
+            background: '#F6CF9F',
             borderRadius: '4px',
             padding: '0px 10px',
             boxSizing: 'border-box',
@@ -308,7 +309,7 @@ function DataUpload({code, type, onDataChange, ...props}) {
                 <Button style={{marginLeft: '10px'}} type="primary" icon={<PlayCircleOutlined />} >Run</Button>
             </div> */}
             <br />
-            <Form.Group controlId="formFile" id="csvFile" className="mb-3">
+            <Form.Group controlId="formFile" id="csvFile" className="mb-2">
                 <Form.Control type="file" onChange={handleFileUpload} />
             </Form.Group>
             {/* <Upload className="avatar-uploader" {...propsUpload} fileList={fileList}>

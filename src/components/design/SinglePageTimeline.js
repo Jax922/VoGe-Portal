@@ -267,7 +267,7 @@ function SinglePageTimeline({ page, onDataChange, ...props }) {
                 </div>
                 <div className="steps-container">
                     <div className="pre-step-node"
-                        style={{width: "140px"}}
+                        style={{width: "140px", marginLeft: "0px"}}
                     >   
                         <p className="pre-step-node-title">
                             <strong>Warm-up</strong>
@@ -377,7 +377,7 @@ function SinglePageTimeline({ page, onDataChange, ...props }) {
                                         return (
                                             <span className="data-elem-node" key={index}>
                                                 {content.timeNode}
-                                                <font className="data-elem-node-del" style={{color: "red"}} onClick={(e) => handleRemoveDataElementNode(e, index)}>
+                                                <font className="data-elem-node-del" style={{color: "#F59F22"}} onClick={(e) => handleRemoveDataElementNode(e, index)}>
                                                     <i className="bi bi-x-circle-fill"></i>
                                                 </font>
                                             </span>
@@ -408,10 +408,11 @@ function SinglePageTimeline({ page, onDataChange, ...props }) {
                         </div>
                     </div>
                 </div>
+                
+                <div className="pre-script-container">
                 <div>
                     <p className="pre-step-title">AutoScript</p>
                 </div>
-                <div className="pre-script-container">
                 <Tabs
                     defaultActiveKey={activeTimeNode}
                     id="uncontrolled-tab-example"

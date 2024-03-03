@@ -1,5 +1,5 @@
 * {
-    font-family: 'Helvetica';
+    font-family: 'Krungthep';
 }
 
 .h-chart {
@@ -21,6 +21,7 @@
     margin-left: 5px;
     line-height: 60px;
     font-size: 20px;
+    color: #F59F22;
 }
 
 .design-border {
@@ -32,7 +33,7 @@
     border-radius: 10px;
     margin-bottom: 10px;
     display: inline-block;
-    width: 90%;
+    /* width: 90%; */
     position: relative;
 }
 
@@ -71,6 +72,7 @@ html,
 body {
   position: relative;
   height: 100%;
+  background: #F1F4F4;
 }
 
 body {
@@ -155,15 +157,16 @@ body {
 .example-header {
   
   /* background: linear-gradient(to right, #cfd9df, #e2ebf0, #ffecd2, #fcb69f); */
-  background: #2576D2;
-  color: #fff;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  color: #F59F22;
   text-align: center;
   padding: 1em 0;
   font-weight: bolder;
 }
 
 .example-header h2 {
-  font-family: 'Pacifico', 'Crimson Pro', Arial, sans-serif;
   font-size: 40px;
 }
 
@@ -173,6 +176,7 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
   gap: 20px;
+  position: relative;
   /* padding: 20px; */
 }
 
@@ -180,19 +184,25 @@ body {
   background: #fff;
   /* border: 1px solid #ddd; */
   border-radius: 5px;
-  padding: 20px;
+  /* padding: 20px; */
   text-align: center;
   width: 100%;
   min-height: 400px;
-  display: flex;
+  position: relative;
+  margin-top: 20px
 }
 
 .example-examplechart-title {
+  position: absolute;
+  bottom: 0;
+  left: 10px;
   font-size: 18px;
   font-weight: lighter;
   margin-bottom: 20px;
   text-align: left;
   width: 30%;
+  margin-top: 20px;
+  z-index: 100;
 }
 
 .icon-button {
@@ -278,15 +288,26 @@ body {
   height: 75vh;
   width: 100%;
   overflow: auto;
+  font-family: "Krungthep" !important;
+}
+
+.pre-steps-container * {
+  font-family: "Krungthep";
+}
+
+.pre-steps-container textarea {
+  font-family: "Helvetica" !important;
 }
 
 .steps-container {
+  font-family: "Krungthep" !important;
   display: flex;
   align-items: center;
   justify-content: start;
   margin: 20px 0px;
   min-height: 200px;
   height: auto;
+  color: #7F7F7F;
 }
 
 .pre-step-node {
@@ -295,11 +316,15 @@ body {
   padding: 5px;
   cursor: pointer;
   margin-left: 5px;
-  background-color: #eee;
+  background-color: #F6CF9F;
   height: 220px;
-  box-shadow: 1px 1px 1px #eee;
+  box-shadow: 1px 1px 1px #F6CF9F;
+  border-radius: 5px;
+  
 }
-
+.pre-step-node-title strong {
+  font-family: "Krungthep" !important;
+}
 /* .pre-step-node:hover {
   background-color: #4169E1;
   color: #fff;
@@ -342,7 +367,7 @@ body {
   width: 100%;
   height: 120px;
   font-size: 0.8em;
-  background-color: #fff;
+  background-color: #F6CF9F;
   /* border: 1px solid #ddd; */
   padding: 0px;
   border-radius: 5px;
@@ -350,21 +375,28 @@ body {
   margin-bottom: 10px;
 }
 
+.nav-link {
+  color: #7DB2D7;
+  font-weight: bold;
+  font-family: "Krungthep" !important;
+}
+
 .nav-tabs .nav-link.active {
-  background-color: #4169E1;
+  background-color: #7DB2D7;
   color: #fff;
 }
 .nav-tabs .nav-item {
   border-radius: 60%;
 }
 .pre-script-tabs {
-  border-bottom: #4169E1 2px solid;
+  border-bottom: #7DB2D7 2px solid;
+  color: #7DB2D7;
 }
 
 .data-elem-node {
   display: inline-block;
   padding: 5px;
-  color: #4169E1;
+  color: #80B2D6;
   background-color: #fff;
   border-radius: 5px;
   font-weight: bold;
@@ -391,9 +423,11 @@ body {
   height: 100px;
 }
 .pre-step-title {
-  font-size: 1.2em;
+  font-size: 1.5em;
   font-weight: bold;
-  color:#4169E1;  
+  color:#7F7F7F;
+  padding-left: 5px;
+  padding-top: 10px; 
 }
 
 .nluModeExplanation {
@@ -411,4 +445,122 @@ body {
 .nluModeExplanation strong {
   color: #0056b3;
   font-weight: 600;
+}
+
+.btn-primary {
+  background: #7DB2D7;
+  border: none;
+}
+
+
+.ant-btn-primary {
+  background: #7DB2D7;
+  border: none;
+}
+
+.ant-btn-primary:hover {
+  background: #7DB2D7 !important;
+  border: none;
+}
+
+.ant-btn-dangerous {
+  background-color: #F59F22 !important;
+  border: none;
+}
+
+.ant-tabs-tab {
+  color: #7F7F7F !important;
+  font-weight: bold;
+}
+
+.ant-tabs-tab-active .ant-tabs-tab-btn{
+  color: #7DB2D7 !important;
+  text-shadow: 0 0 0.25px currentcolor;
+}
+
+
+.ant-tabs-nav::before{
+  border-bottom: none !important;
+}
+
+.ant-tabs-ink-bar {
+  background-color: #7DB2D7 !important;
+}
+
+.form-check-input:checked {
+  background-color: #7DB2D7 !important;
+  border-color: #7DB2D7 !important;
+}
+
+.form-select {
+  color: #7F7F7F !important;
+}
+
+.accordion {
+  --bs-accordion-active-bg: #A8C0D0;
+  --bs-accordion-color: #fff !important;
+}
+.accordion-button:not(.collapsed) {
+  color: #fff !important;
+}
+.accordion-button:not(.collapsed) font {
+  color: #fff !important;
+}
+.accordion-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.accordion * {
+  color: #969696 !important;
+}
+
+.icon {
+  font-size: 20px;
+  width: 20px
+}
+
+.cm-theme-light *{
+  font-family: "Helvetica" !important;
+}
+
+#csvFile {
+  /* background-color: #7DB2D7; */
+}
+
+#csvFile input {
+  background-color: #A8C0D0;
+  color: #7F7F7F;
+  padding: 0;
+  margin: 0;
+}
+
+#csvFile input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+#csvFile input::before {
+  content: 'Choose File';
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  /* border: 1px solid #7DB2D7; */
+  border-right: 2px solid rgba(127, 127, 127, 0.5);
+  color: #7F7F7F;
+}
+
+#csvFile input:hover::before {
+  background-color: #A8C0D0;
+  color: #7F7F7F;
+}
+
+#csvFile input::after {
+  /* content: 'No Chosen File'; */
+  display: inline-block;
+  padding-right: 5px; 
+}
+
+#csvFile input::-webkit-file-upload-button {
+  margin-right: 5px; /* 根据需要调整距离 */
 }
