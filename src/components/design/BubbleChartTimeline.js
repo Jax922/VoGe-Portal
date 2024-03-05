@@ -428,7 +428,7 @@ function SinglePageTimeline({ page, onDataChange, ...props }) {
             dataNode: selectDataElementNode,
             script: scriptBubbleChart
         });
-        setStoryTimelineData(storyTimelineData);
+        setStoryTimelineData(JSON.parse(JSON.stringify(storyTimelineData)));
         setViewStoryTimeline(handleViewOfStoryTimeline(storyTimelineData));
     }
 
