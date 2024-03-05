@@ -162,6 +162,10 @@ function DataUpload({code, type, onDataChange, ...props}) {
                 option.yAxis.name = result.yAxisName;
             }
 
+            if (option.title) {
+                option.title.text = "Chart Title";
+            }
+
 
             for (let i = 0; i < result.data.length; i++) {
                 if (option.series[i] === undefined) {
@@ -248,6 +252,7 @@ function DataUpload({code, type, onDataChange, ...props}) {
             option.baseOption.yAxis.min = 0;
             option.baseOption.yAxis.max = result.maxYAxis;
 
+            option.baseOption.title[1].text = "Chart Title";
            
 
             let oneOption = {

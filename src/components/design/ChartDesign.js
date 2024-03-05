@@ -76,7 +76,7 @@ export default function ChartDesign() {
       api[type]({
         message: msg,
         description: desc,
-        duration: 0.5,
+        duration: 0.3,
       });
     };
 
