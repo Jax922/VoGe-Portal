@@ -68,7 +68,7 @@ export default function ChartDesign() {
     const [chartSettings, setChartSettings] = useState({renderingMode: 'immediate'});
 
     notification.config({
-        duration: 1,
+        duration: 0.1,
         maxCount: 3,
     });
     const [api, contextHolder] = notification.useNotification();
@@ -76,6 +76,7 @@ export default function ChartDesign() {
       api[type]({
         message: msg,
         description: desc,
+        duration: 0.5,
       });
     };
 
