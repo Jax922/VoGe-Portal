@@ -958,7 +958,8 @@ function BubbleChartSettings({ page, onDataChange, ...props }) {
                         <option value="end">end</option>
                     </Form.Select>
                 </InputGroup>
-            <div style={{display: yAxisShow ? "block" : "none"}}>
+            {/* <div style={{display: yAxisShow ? "block" : "none"}}> */}
+            <div>
                 <InputGroup className="mb-3">
                     <InputGroup.Text id="inputGroup-sizing-default">
                     Line Type

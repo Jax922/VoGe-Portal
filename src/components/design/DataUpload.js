@@ -18,11 +18,11 @@ let colors = [
     "green",
     "yellow",
     "red",
-    "cerulean",
-    "teal",
-    "orange",
     "purple",
-    "pink"
+    "pink",
+    "brown",
+    "orange",
+    "grey",
 ]
 
 
