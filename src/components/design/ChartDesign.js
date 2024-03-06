@@ -175,6 +175,13 @@ export default function ChartDesign() {
                     }
                     data.pages.forEach((page) => {
                         page.active = false;
+                        if (page.data) {
+                            const pageData = JSON.parse(page.data);
+                            if (pageData.customOption && pageData.customOption.uploadData) {
+                                pageData.customOption.uploadData = "no";
+                            }
+                            page.data = JSON.stringify(pageData, null, 2);
+                        }
                     });
                     data.pages[0].active = true;
                     setSlide(data);
@@ -347,24 +354,105 @@ export default function ChartDesign() {
             }
         })
 
-        storageRef.child(filePath).putString(JSON.stringify(slide)).then((snapshot) => {
-            // update cover img
-            database.slides
-                .where("userId", "==", userId)
-                .where("name", "==", slideName)
-                .get()
-                .then(querySnapshot => {
-                  querySnapshot.forEach(doc => {
-                    doc.ref.update({ coverImg: activePage.img })
-                      .then(() => {
-                        console.log("Slide updated successfully")
-                        openNotificationWithIcon('success', 'Slide updated successfully', '');
+        if (activePage.type === 'timelinebubble') {
+            const activePageStoryTimelineFromLocal = JSON.parse(localStorage.getItem('activePageTimeline'));
+            if (activePageStoryTimelineFromLocal) {
+                activePage.storyTimeline = activePageStoryTimelineFromLocal;
+            }
+            slide.pages.forEach((page) => {
+                if (page.index === activePage.index) {
+                    page.storyTimeline = activePage.storyTimeline;
+                }
+            })
+            storageRef.child(filePath).putString(JSON.stringify(slide)).then((snapshot) => {
+                // update cover img
+                database.slides
+                    .where("userId", "==", userId)
+                    .where("name", "==", slideName)
+                    .get()
+                    .then(querySnapshot => {
+                      querySnapshot.forEach(doc => {
+                        doc.ref.update({ coverImg: activePage.img })
+                          .then(() => {
+                            console.log("Slide updated successfully")
+                            openNotificationWithIcon('success', 'Slide updated successfully', '');
+                        })
+                          .catch(error => console.error("Error updating slide:", error));
+                      });
                     })
-                      .catch(error => console.error("Error updating slide:", error));
-                  });
-                })
-                .catch(error => console.error("Error finding slide:", error));
-        }); 
+                    .catch(error => console.error("Error finding slide:", error));
+            });
+
+        // storageRef.child(filePath).getDownloadURL().then((url) => {
+        //     fetch(url)
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             let storyTimelineTemp = null;
+        //             if (data.pages.length === 0) {
+                        
+        //             } else {
+        //                 data.pages.forEach((page) => {
+        //                     if (page.index === activePage.index) {
+        //                         if (page.storyTimeline) {
+        //                             storyTimelineTemp = page.storyTimeline;
+        //                         }
+        //                     }
+        //                 });
+        //             }
+                    
+        //             slide.pages.forEach((page) => {
+        //                 if (page.index === activePage.index) {
+        //                     if (storyTimelineTemp) {
+        //                         page.storyTimeline = storyTimelineTemp;
+        //                     }
+        //                 }
+        //             })
+        //             storageRef.child(filePath).putString(JSON.stringify(slide)).then((snapshot) => {
+        //                 // update cover img
+        //                 database.slides
+        //                     .where("userId", "==", userId)
+        //                     .where("name", "==", slideName)
+        //                     .get()
+        //                     .then(querySnapshot => {
+        //                       querySnapshot.forEach(doc => {
+        //                         doc.ref.update({ coverImg: activePage.img })
+        //                           .then(() => {
+        //                             console.log("Slide updated successfully")
+        //                             openNotificationWithIcon('success', 'Slide updated successfully', '');
+        //                         })
+        //                           .catch(error => console.error("Error updating slide:", error));
+        //                       });
+        //                     })
+        //                     .catch(error => console.error("Error finding slide:", error));
+        //             });
+                    
+        //         })
+        //         .catch(error => console.error("Error fetching chart data:", error));
+        // }).catch((error) => {
+        //     console.error("Error fetching file:", error);
+        // });
+        } else {
+            storageRef.child(filePath).putString(JSON.stringify(slide)).then((snapshot) => {
+                // update cover img
+                database.slides
+                    .where("userId", "==", userId)
+                    .where("name", "==", slideName)
+                    .get()
+                    .then(querySnapshot => {
+                      querySnapshot.forEach(doc => {
+                        doc.ref.update({ coverImg: activePage.img })
+                          .then(() => {
+                            console.log("Slide updated successfully")
+                            openNotificationWithIcon('success', 'Slide updated successfully', '');
+                        })
+                          .catch(error => console.error("Error updating slide:", error));
+                      });
+                    })
+                    .catch(error => console.error("Error finding slide:", error));
+            });
+        }
+
+        
     }
 
     const handleInsertText = () => {
@@ -572,6 +660,7 @@ export default function ChartDesign() {
                             >   
                                 <PageDesign key={activePage.data} page={activePage} onDataChange={handleDataChange} 
                                             onTextEdit={handleTextEditShowOrClose}
+                                            slide={slide}
                                 />
                                 {
                                     textEditShow && textEdits.map((textEdit, index) => {

@@ -1,6 +1,7 @@
 
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
+import { useLocation } from 'react-router-dom';
 import {Card, Row, Col, Tabs, Button} from 'antd'
 import { BarChartOutlined, CodeOutlined, DatabaseFilled, FileOutlined, AudioOutlined} from '@ant-design/icons';
 import MyChart from './MyChart'
@@ -8,8 +9,19 @@ import CodeDisplay from './CodeDisplay'
 import DataUpload from './DataUpload'
 import SinglePageTimeline from "./SinglePageTimeline";
 import BubbleChartTimeline from "./BubbleChartTimeline";
+import { storage, database } from "../../firebase";
 
-export default function PageDesign({page, onDataChange, onTextEdit, ...props }) {
+export default function PageDesign({page, onDataChange, onTextEdit, slide, ...props }) {
+
+
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const userId = queryParams.get('userId');
+    const slideName = queryParams.get('slide');
+    const slideTitle = queryParams.get('title');
+
+    const storageRef = storage.ref();
+    const filePath = `slides/${userId}/${slideName}`;
 
     const tabs = [
         {
@@ -45,6 +57,7 @@ export default function PageDesign({page, onDataChange, onTextEdit, ...props }) 
     const [activeTab, setActiveTab] = useState(tabs[0].key)
     const [dataString, setDataString] = useState(page.data)
     const [chartType, setChartType] = useState(page.type)
+    const [pageData, setPageData] = useState(page)
 
     const handleTabChange = (key) => {
         setActiveTab(key);
@@ -60,7 +73,14 @@ export default function PageDesign({page, onDataChange, onTextEdit, ...props }) 
         onDataChange(value);
     }
 
-    
+    const updatePageData = (newData) => {
+        console.log(slide);
+        console.log(newData);
+        storageRef.child(filePath).putString(JSON.stringify(slide)).then((snapshot) => {
+            console.log('update timeline ===>', snapshot);
+        });
+        localStorage.setItem('activePageTimeline', JSON.stringify(newData.storyTimeline));
+    };
 
     return (
         <div
@@ -123,7 +143,7 @@ export default function PageDesign({page, onDataChange, onTextEdit, ...props }) 
                 {  page && page.type !== "" && activeTab === '3' && <DataUpload type={chartType} code={dataString} onDataChange={handleDataChange}/>}
                 {  page && page.type !== "timelinebubble" && activeTab === '4' && <SinglePageTimeline page={page} onDataChange={handleDataChange}/> }
                 {
-                    page && page.type === "timelinebubble" && activeTab === '4' && <BubbleChartTimeline page={page} onDataChange={handleDataChange}/>
+                    page && page.type === "timelinebubble" && activeTab === '4' && <BubbleChartTimeline page={page} onDataChange={handleDataChange} onUpdatePageData={updatePageData} slide={slide}/>
                 }
                 
 

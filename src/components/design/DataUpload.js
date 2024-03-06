@@ -243,7 +243,7 @@ function DataUpload({code, type, onDataChange, ...props}) {
                 });
             }
 
-            option.baseOption.series = [option.baseOption.series[0]];
+            option.baseOption.series = [option.baseOption.series[0], option.baseOption.series[0], option.baseOption.series[0],option.baseOption.series[0], option.baseOption.series[0], option.baseOption.series[0]];
 
             option.baseOption.xAxis.type = "value";
             option.baseOption.xAxis.min = 0;

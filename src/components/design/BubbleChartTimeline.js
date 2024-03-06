@@ -177,7 +177,7 @@ const initDataElementNode = (option) => {
     return dataElementContents;
 }
 
-function SinglePageTimeline({ page, onDataChange, ...props }) {
+function SinglePageBubbleTimeline({ page, onDataChange, onUpdatePageData, ...props }) {
     const pageData = JSON.parse(page.data);
     let initViewStoryTimeline = null;
     const timelineYears = pageData.baseOption.timeline.data;
@@ -373,6 +373,8 @@ function SinglePageTimeline({ page, onDataChange, ...props }) {
         dataElementContents.splice(idx, 1);
         setStoryTimelineData(storyTimelineData);
         setViewStoryTimeline(handleViewOfStoryTimeline(storyTimelineData));
+        page.storyTimeline = storyTimelineData;
+        onUpdatePageData(page);
     }
 
     const handleChangeDataElementNode = (e) => {
@@ -429,6 +431,9 @@ function SinglePageTimeline({ page, onDataChange, ...props }) {
             script: scriptBubbleChart
         });
         setStoryTimelineData(JSON.parse(JSON.stringify(storyTimelineData)));
+        page.storyTimeline = storyTimelineData;
+        onUpdatePageData(page);
+        // setStoryTimelineData(storyTimelineData);
         setViewStoryTimeline(handleViewOfStoryTimeline(storyTimelineData));
     }
 
@@ -632,4 +637,4 @@ function SinglePageTimeline({ page, onDataChange, ...props }) {
 }
 
 
-export default SinglePageTimeline;
+export default SinglePageBubbleTimeline;
