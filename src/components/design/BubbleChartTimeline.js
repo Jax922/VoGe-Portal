@@ -313,7 +313,6 @@ function SinglePageBubbleTimeline({ page, onDataChange, onUpdatePageData, ...pro
 
 
     const handleStoryScript = (e, type, idx) => {
-        console.log(type, idx)
         const script = e.target.value;
         if (type === "Warm-up") {
             storyTimelineData[0].contents[0].script = script;
@@ -323,12 +322,6 @@ function SinglePageBubbleTimeline({ page, onDataChange, onUpdatePageData, ...pro
             const tickContent = script.split("\n")[1];
             storyTimelineData[1].contents[0].script = lineContent;
             storyTimelineData[1].contents[1].script = tickContent;
-        }
-        if (type === "X-Axis Line") {
-            storyTimelineData[1].contents[0].script = script;
-        }
-        if (type === "X-Axis Tick") {
-            storyTimelineData[1].contents[1].script = script;
         }
         if (type === "Y-Axis") {
             const lineContent = script.split("\n")[0];
@@ -347,13 +340,16 @@ function SinglePageBubbleTimeline({ page, onDataChange, onUpdatePageData, ...pro
         }
 
         storyTimelineData[3].contents.forEach(content => {
-            if (content.timeNode === type) {
+            let nodeNameTemp = content.timeNode + "-" + content.dataNode;
+            if (nodeNameTemp === type) {
                 content.script = script;
             }
         })
 
         setStoryTimelineData(storyTimelineData);
         setViewStoryTimeline(handleViewOfStoryTimeline(storyTimelineData));
+        page.storyTimeline = storyTimelineData;
+        onUpdatePageData(page);
     }
 
     const handleXAxisStyleModeChange = (e) => {
@@ -539,20 +535,20 @@ function SinglePageBubbleTimeline({ page, onDataChange, onUpdatePageData, ...pro
                                 fontSize: "10px",
                             }}>Create Data Element</p>
                             <InputGroup className="mb-3">
-                                <Form.Select size="sm" value={selectDataElementYear} onChange={handleChangeDataElementYear}>
+                                <Form.Select key={"select1"} size="sm" value={selectDataElementYear} onChange={handleChangeDataElementYear}>
                                     {
                                         timelineYears.map((tick, index) => {
                                             return (
-                                                <option value={tick} key={index}>{tick}</option>
+                                                <option value={tick} key={String(index)+"a"}>{tick}</option>
                                             )
                                         })
                                     }
                                 </Form.Select>
-                                <Form.Select size="sm" value={selectDataElementNode} onChange={handleChangeDataElementNode}>
+                                <Form.Select key={"select2"} size="sm" value={selectDataElementNode} onChange={handleChangeDataElementNode}>
                                     {
                                         dataGroup.map((dataItem, index) => {
                                             return (
-                                                <option value={dataItem.key + "(" + dataItem.colorName + ")"} key={index}>{dataItem.key}</option>
+                                                <option value={dataItem.key + "(" + dataItem.colorName + ")"} key={String(index)+"b"}>{dataItem.key}</option>
                                             )
                                         })
                                     }
@@ -560,7 +556,7 @@ function SinglePageBubbleTimeline({ page, onDataChange, onUpdatePageData, ...pro
                                         dataGroup.map((dataItem, index) => {
                                             return dataItem.vals.map((val, idx) => {
                                                 return (
-                                                    <option value={val} key={index}>{val}</option>
+                                                    <option value={val} key={index+1000}>{val}</option>
                                                 )
                                             })
                                         })
@@ -571,7 +567,7 @@ function SinglePageBubbleTimeline({ page, onDataChange, onUpdatePageData, ...pro
                             <div className="added-data-elem-node">
                                 {   storyTimelineData && storyTimelineData[3] && storyTimelineData[3].isShow && storyTimelineData[3].contents.map((content, index) => {
                                         return (
-                                            <span className="data-elem-node" key={index}>
+                                            <span className="data-elem-node" key={content.timeNode+content.dataNode+String(index)+"1"}>
                                                 {content.timeNode + "-" + content.dataNode}
                                                 <font className="data-elem-node-del" style={{color: "red"}} onClick={(e) => handleRemoveDataElementNode(e, index)}>
                                                     <i className="bi bi-x-circle-fill"></i>
@@ -617,7 +613,7 @@ function SinglePageBubbleTimeline({ page, onDataChange, onUpdatePageData, ...pro
                     {
                         viewStoryTimeline.map((content, index) => {
                             return (
-                                <Tab eventKey={content.timeNode+ String(index)} title={content.timeNode} key={index}>
+                                <Tab eventKey={content.timeNode + content.dataNode+ String(index)} title={content.timeNode} key={content.timeNode + content.dataNode+ String(index)+"0"}>
                                     <Form>
                                         <Form.Control as="textarea" rows={5} value={content.script} onChange={(e) => handleStoryScript(e, content.timeNode, index)}/>
                                     </Form>

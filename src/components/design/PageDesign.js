@@ -74,11 +74,11 @@ export default function PageDesign({page, onDataChange, onTextEdit, slide, ...pr
     }
 
     const updatePageData = (newData) => {
-        console.log(slide);
-        console.log(newData);
-        storageRef.child(filePath).putString(JSON.stringify(slide)).then((snapshot) => {
-            console.log('update timeline ===>', snapshot);
-        });
+        // console.log(slide);
+        // console.log(newData);
+        // storageRef.child(filePath).putString(JSON.stringify(slide)).then((snapshot) => {
+        //     console.log('update timeline ===>', snapshot);
+        // });
         localStorage.setItem('activePageTimeline', JSON.stringify(newData.storyTimeline));
     };
 
