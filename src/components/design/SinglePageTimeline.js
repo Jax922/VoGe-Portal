@@ -34,11 +34,11 @@ const handleViewOfStoryTimeline = (storyTimeline) => {
                 });
             }
             if (node.nodeName === "X-Axis") {
-                // if(node.mode === "splitAxis") {
-                //     node.contents.forEach(content => {
-                //         viewOfStoryTimeline.push(content);
-                //     });
-                // } else { // combineAxis
+                if(node.mode === "splitAxis") {
+                    node.contents.forEach(content => {
+                        viewOfStoryTimeline.push(content);
+                    });
+                } else { // combineAxis
                     let timeNodes = findTimeNodes(node.contents);
                     let content = {
                         type: "X-Axis",
@@ -46,14 +46,14 @@ const handleViewOfStoryTimeline = (storyTimeline) => {
                         script: node.contents.map(content => content.script).join("\n")
                     }
                     viewOfStoryTimeline.push(content);
-                // }
+                }
             }
             if (node.nodeName === "Y-Axis") {
-                // if(node.mode === "splitAxis") {
-                //     node.contents.forEach(content => {
-                //         viewOfStoryTimeline.push(content);
-                //     });
-                // } else { // combineAxis
+                if(node.mode === "splitAxis") {
+                    node.contents.forEach(content => {
+                        viewOfStoryTimeline.push(content);
+                    });
+                } else { // combineAxis
                     let timeNodes = findTimeNodes(node.contents);
                     let content = {
                         type: "Y-Axis",
@@ -61,7 +61,7 @@ const handleViewOfStoryTimeline = (storyTimeline) => {
                         script: node.contents.map(content => content.script).join("\n")
                     }
                     viewOfStoryTimeline.push(content);
-                // }
+                }
             }
             if (node.nodeName === "Data Element") {
                 node.contents.forEach(content => {

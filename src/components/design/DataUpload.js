@@ -25,6 +25,18 @@ let colors = [
     "grey",
 ]
 
+let colorValues = [
+    "#5470c6",
+    "#91cc75",
+    "#fac858",
+    "#ee6666",
+    "#9a60b4",
+    "#ea7ccc",
+    "#BC8F8F",
+    "#FF8C00",
+    "#808080"
+]
+
 
 
 function processData(csv) {
@@ -234,16 +246,43 @@ function DataUpload({code, type, onDataChange, ...props}) {
                     if (index < 4) {
                         option.baseOption.series[0].data[index].name = key;
                         option.baseOption.series[0].data[index].data = groupData[timelineYears[0]][key];
+                        if (option.baseOption.series[0].data[index].itemStyle) {
+                            option.baseOption.series[0].data[index].itemStyle.color = colorValues[index];
+                        } else {
+                            option.baseOption.series[0].data[index].itemStyle = {
+                                color: colorValues[index]
+                            }
+                        }
                     } else {
                         option.baseOption.series[0].data.push(JSON.parse(JSON.stringify(option.baseOption.series[0])));
                         option.baseOption.series[0].data[index].dataColorname = colors[index];
                         option.baseOption.series[0].data[index].name = key;
-                        option.baseOption.series[0].data[index].data = groupData[timelineYears[0]][key];
+                        option.baseOption .series[0].data[index].data = groupData[timelineYears[0]][key];
+                        if (option.baseOption.series[0].data[index].itemStyle) {
+                            option.baseOption.series[0].data[index].itemStyle.color = colorValues[index];
+                        } else {
+                            option.baseOption.series[0].data[index].itemStyle = {
+                                color: colorValues[index]
+                            }
+                        }
                     }
                 });
             }
 
             option.baseOption.series = [option.baseOption.series[0], option.baseOption.series[0], option.baseOption.series[0],option.baseOption.series[0], option.baseOption.series[0], option.baseOption.series[0]];
+
+            option.baseOption.series.forEach((serie, index) => {
+                let serieCopy = JSON.parse(JSON.stringify(serie));
+                
+                if (serieCopy.itemStyle) {
+                    serieCopy.itemStyle.color = colorValues[index];
+                } else {
+                    serieCopy.itemStyle = {
+                        color: colorValues[index]
+                    }
+                }
+                option.baseOption.series[index] = serieCopy;
+            })
 
             option.baseOption.xAxis.type = "value";
             option.baseOption.xAxis.min = 0;
@@ -284,6 +323,21 @@ function DataUpload({code, type, onDataChange, ...props}) {
                     copySerie.data = groupData[yearKey][legendKey];
                     copyOption.series.push(copySerie);
                 }
+
+                // fix color
+                copyOption.series.forEach((serie, index) => {
+                    let serieCopy = JSON.parse(JSON.stringify(serie));
+                    
+                    if (serieCopy.itemStyle) {
+                        serieCopy.itemStyle.color = colorValues[index];
+                    } else {
+                        serieCopy.itemStyle = {
+                            color: colorValues[index]
+                        }
+                    }
+                    copyOption.series[index] = serieCopy;
+                });
+
                 option.options.push(copyOption);
             }
 
